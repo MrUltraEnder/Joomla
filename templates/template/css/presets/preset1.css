@@ -1,0 +1,145 @@
+a {
+  color: #5AADDD;
+}
+a:hover {
+  color: #0e9cd1;
+}
+.sp-megamenu-parent >li.active>a,
+.sp-megamenu-parent >li:hover>a {
+  color: #5AADDD;
+}
+.sp-megamenu-parent .sp-dropdown li.sp-menu-item >a:hover {
+  background: #5AADDD;
+}
+.sp-megamenu-parent .sp-dropdown li.sp-menu-item.active>a {
+  color: #5AADDD;
+}
+#offcanvas-toggler >i {
+  color: #000000;
+}
+#offcanvas-toggler >i:hover {
+  color: #5AADDD;
+}
+.btn-primary,
+.sppb-btn-primary {
+  border-color: #0faae4;
+  background-color: #5AADDD;
+}
+.btn-primary:hover,
+.sppb-btn-primary:hover {
+  border-color: #0d8ab9;
+  background-color: #0e9cd1;
+}
+ul.social-icons >li a:hover {
+  color: #5AADDD;
+}
+.sp-page-title {
+  background: #5AADDD;
+}
+.layout-boxed .body-innerwrapper {
+  background: #ffffff;
+}
+.sp-module ul >li >a {
+  color: #000000;
+}
+.sp-module ul >li >a:hover {
+  color: #5AADDD;
+}
+.sp-module .latestnews >div >a {
+  color: #000000;
+}
+.sp-module .latestnews >div >a:hover {
+  color: #5AADDD;
+}
+.sp-module .tagscloud .tag-name:hover {
+  background: #5AADDD;
+}
+.sp-simpleportfolio .sp-simpleportfolio-filter > ul > li.active > a,
+.sp-simpleportfolio .sp-simpleportfolio-filter > ul > li > a:hover {
+  background: #5AADDD;
+}
+.search .btn-toolbar button {
+  background: #5AADDD;
+}
+.post-format {
+  background: #5AADDD;
+}
+.voting-symbol span.star.active:before {
+  color: #5AADDD;
+}
+.sp-rating span.star:hover:before,
+.sp-rating span.star:hover ~ span.star:before {
+  color: #0e9cd1;
+}
+.entry-link,
+.entry-quote {
+  background: #5AADDD;
+}
+blockquote {
+  border-color: #5AADDD;
+}
+.carousel-left:hover,
+.carousel-right:hover {
+  background: #5AADDD;
+}
+#sp-footer {
+  background: #5AADDD;
+}
+.sp-comingsoon body {
+  background-color: #5AADDD;
+}
+.pagination>li>a,
+.pagination>li>span {
+  color: #000000;
+}
+.pagination>li>a:hover,
+.pagination>li>a:focus,
+.pagination>li>span:hover,
+.pagination>li>span:focus {
+  color: #000000;
+}
+.pagination>.active>a,
+.pagination>.active>span {
+  border-color: #5AADDD;
+  background-color: #5AADDD;
+}
+.pagination>.active>a:hover,
+.pagination>.active>a:focus,
+.pagination>.active>span:hover,
+.pagination>.active>span:focus {
+  border-color: #5AADDD;
+  background-color: #5AADDD;
+}
+/***** PRESET *****/
+#sp-slide-wrapper .large_bold_black,
+.sppb-section-title h3,
+#sp-top-bar .social-icons i,
+#sp-top-bar .sp-contact-info li {
+    color: #5AADDD!important;
+}
+.lt-introduction .lt-intro-sub:hover i {
+    border: 5px solid #5AADDD;
+}
+.lt-button:hover {
+    border: 3px solid #5AADDD;
+}
+.lt-button:hover,
+.hikashop_cart_input_button,
+.hikashop_cart_input_button:hover,
+#sp-slide-wrapper .btn-primary:hover {
+    background: #5AADDD!important;
+}
+.blogDate {
+    background: #5AADDD;
+}
+.lt-buy-now {
+    background: #5a9dcd;
+}
+.projects-filter a.selected, 
+.projects-filter a.selected:hover,
+.projects-filter a:hover {
+    background: #5aaddd!important;
+}
+.projects-wrapper .project-img:hover .project-img-extra {
+    background: rgba(90, 173, 221, .7)!important;
+}

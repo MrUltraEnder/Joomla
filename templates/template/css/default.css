@@ -1,0 +1,524 @@
+/**** CUSTOM RESPONSIVE *****/
+@media (min-width: 1024px) {
+    .hikashop_product {
+        width: 25%!important;
+    }
+}
+@media (min-width: 980px) and (max-width: 1199px) {
+    .sp-megamenu-parent > li > a {
+        letter-spacing: 0!important;
+        padding: 0 5px!important;
+        font-size: 10px!important;
+    }
+    .hikashop_product_main_image_subdiv {
+        width: 100%!important;
+    }
+    .hikashop_product_right_part {
+        padding-left: 20px!important;
+    }
+    #hikashop_product_bottom_part {
+        width: 48%!important;
+    }
+}
+@media (min-width: 768px) and (max-width: 979px) {
+    #lt-k2-blog div.k2ItemsBlock ul li {
+        width: 31%!important;
+    }
+    .sp-megamenu-parent > li > a {
+        font-size: 10px!important;
+        letter-spacing: 0!important;
+        padding: 0 7px!important;
+    }
+  	#sp-logo img {
+      	width: 100%;
+    }
+    #hikashop_product_bottom_part {
+        position: static!important;
+        width: 100%!important;
+    }
+    .hikashop_product_main_image_subdiv {
+        width: 100%!important;
+    }
+    .hikashop_product_right_part {
+        padding-left: 20px!important;
+    }
+    .hikashop_products_listing .hikashop_product {
+        width: 49%!important;
+    }
+    #sp-bottom1, #sp-bottom2, #sp-bottom3, #sp-bottom4 {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    #sp-bottom3 {
+        clear: left;
+    }
+}
+@media (min-width: 980px) and (max-width: 1024px) {
+    #sp-bottom1, #sp-bottom2, #sp-bottom3, #sp-bottom4 {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        width: 50%;
+    }
+    #sp-bottom3 {
+        clear: left;
+    }
+    .hikashop_product_main_image_subdiv {
+        width: 100%!important;
+    }
+    .hikashop_product_right_part {
+        padding-left: 20px!important;
+    }
+    .hikashop_products_listing .hikashop_product {
+        width: 49%!important;
+    }
+}
+@media (max-width: 767px) {
+    .projects-filter {
+        display: inline-block;
+    }
+    .projects-filter ul li {
+        display: block;
+        float: left;
+        margin: 10px 0;
+    }
+    #lt-k2-blog div.k2ItemsBlock ul li {
+        width: 100%!important;
+    }
+    div.k2ItemsBlock ul {
+        margin-left: -40px!important;
+    }
+    #sp-footer2 {
+        text-align: left!important;
+    }
+    .sp-contact-info {
+        float: left!important;
+    }
+    .sticky-wrapper.is-sticky {
+        position: relative!important;
+    }
+    #sp-menu {
+        position: absolute!important;
+        right: 0;
+        top: 35px;
+    }
+    #offcanvas-toggler {
+        line-height: 0!important;
+    }
+    #offcanvas-toggler > i {
+        margin: 0;
+    }
+    .sub-clients img {
+        display: inline!important;
+    }
+  	#hikashop_product_bottom_part {
+        position: static!important;
+        width: 100%!important;
+    }
+    #hikashop_product_left_part,
+    .hikashop_product_main_image_subdiv {
+        width: 100%!important;
+    }
+    #hikashop_product_left_part .hikashop_product_main_image img {
+        width: 100%!important;
+    }
+    .hikashop_products_listing .hikashop_product {
+        width: 100%!important;
+    }
+}
+@media (max-width: 480px) {
+    .sp-simpleportfolio .sp-simpleportfolio-filter > ul > li {
+        margin: 5px!important;
+    }
+    .free-template-download  {
+        display: none;
+    }
+}
+
+/***** GENERAL *****/
+#sp-page-builder .sppb-section-title {
+    margin-bottom: 20px;
+}
+.sppb-section-title h3 {
+    font-size: 36px!important;
+    font-weight: 700;
+    text-transform: uppercase;
+    position: relative;
+  	line-height: 36px !important;
+}
+.sppb-section-title h2 {
+    color: #333;
+    font-size: 36px;
+    font-weight: 300;
+    padding-bottom: 20px;
+}
+.sppb-section-title p {
+    font-size: 13px;
+    color: #000;
+}
+.lt-button {
+    padding: 8px 30px;
+    border: 2px solid #e1e1e1;
+    color: #3f3f3f;
+    text-transform: uppercase;
+}
+.lt-button:hover {
+    color: #fff;
+}
+.btn {
+    border-radius: 0!important;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 25px;
+    text-shadow: none;
+    text-transform: uppercase;
+    border: none!important;
+}
+/***** HEAD ******/
+#sp-main-body,
+#sp-page-title,
+#sp-header,
+#sp-header .logo,
+#offcanvas-toggler,
+.sticky-wrapper.is-sticky,
+.sp-megamenu-parent >li >a {
+	-webkit-transition: .6s ease-in-out;
+	-moz-transition:    .6s ease-in-out;
+	-ms-transition:     .6s ease-in-out;
+	-o-transition:      .6s ease-in-out;
+	transition:         .6s ease-in-out;
+}
+.sticky-wrapper.is-sticky #sp-header,
+.sticky-wrapper.is-sticky #sp-header .logo {
+	height: 70px!important;
+}
+.sticky-wrapper.is-sticky #offcanvas-toggler,
+.sticky-wrapper.is-sticky .sp-megamenu-parent >li >a {
+	line-height: 70px!important;
+}
+#sp-logo img {
+  	padding-top: 18px;
+}
+.sticky-wrapper.is-sticky #sp-logo img {
+  	padding-top: 8px;
+}
+/***** TOP BAR *****/
+#sp-top-bar .social-icons i {
+    font-size: 20px;
+}
+#sp-top-bar .sp-contact-info li {
+    font-size: 16px;
+}
+/***** SLIDER *****/
+.tp-dottedoverlay {
+    background-color: #2c3d50!important;
+    opacity: .6;
+}
+#sp-slide-wrapper .home-top-slide-text {
+    border-bottom: 3px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 10px!important;
+}
+#sp-slide-wrapper .large_bold_black span {
+    text-decoration: line-through;
+}
+#sp-slide-wrapper .btn:hover {
+    color: #fff!important;
+}
+/***** INTRODUCTION *****/
+#sp-page-builder .sppb-section-title.sppb-text-center .sppb-title-subheading {
+    display: block;
+}
+.lt-introduction .lt-intro-sub {
+    cursor: pointer;
+}
+.lt-introduction .lt-intro-sub i {
+    display: inline-block!important;
+    border: 5px solid #f8f8f8;
+    width: 100px!important;
+    height: 100px!important;
+    line-height: 100px!important;
+    -webkit-transition: 0.7s ease-in-out;
+    -moz-transition: 0.7s ease-in-out;
+    -ms-transition: 0.7s ease-in-out;
+    -o-transition: 0.7s ease-in-out;
+    transition: 0.7s ease-in-out;
+}
+.lt-introduction .lt-intro-sub:hover i {
+    cursor: pointer;
+    color: #000;
+    -webkit-transform: rotateY(360deg);
+    -moz-transform: rotateY(360deg);
+    -ms-transform: rotateY(360deg);
+    -o-transform: rotateY(360deg);
+}
+.lt-introduction .lt-intro-sub h3 {
+    text-transform: uppercase;
+    font-weight: 700;
+    -webkit-transition: 0.7s ease-in-out;
+    -moz-transition: 0.7s ease-in-out;
+    -ms-transition: 0.7s ease-in-out;
+    -o-transition: 0.7s ease-in-out;
+    transition: 0.7s ease-in-out;
+}
+.lt-introduction .lt-intro-sub h3:hover {
+    -webkit-transition: 0.7s ease-in-out;
+    -moz-transition: 0.7s ease-in-out;
+    -ms-transition: 0.7s ease-in-out;
+    -o-transition: 0.7s ease-in-out;
+    transition: 0.7s ease-in-out;
+}
+.lt-introduction .lt-intro-sub p {
+    font-size: 13px;
+}
+/***** BUY NOW *****/
+.lt-buy-now-content h3 {
+    font-weight: 700;
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+#lt-banner img {
+    cursor: pointer;
+    border: 1px solid #ccc;
+    opacity: .8;
+    -webkit-transition: 0.4s ease-in-out;
+    -moz-transition: 0.4s ease-in-out;
+    -ms-transition: 0.4s ease-in-out;
+    -o-transition: 0.4s ease-in-out;
+    transition: 0.4s ease-in-out;
+}
+#lt-banner img:hover {
+    opacity: 1;
+    -webkit-transition: 0.4s ease-in-out;
+    -moz-transition: 0.4s ease-in-out;
+    -ms-transition: 0.4s ease-in-out;
+    -o-transition: 0.4s ease-in-out;
+    transition: 0.4s ease-in-out;
+}
+/***** PORTFOLIO *****/
+.lt-portfolio .sppb-title-heading {
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.lt-portfolio .sp-simpleportfolio-filter {
+    text-align: left;
+}
+.sp-simpleportfolio .sp-simpleportfolio-filter > ul > li > a {
+    text-transform: uppercase;
+    padding: 8px 15px;
+    font-weight: 500;
+    border-radius: 0!important;
+}
+.sp-simpleportfolio.layout-gallery-nospace .sp-simpleportfolio-item {
+    padding: 10px!important;
+}
+/***** K2 *****/
+span.catItemImage img,
+span.itemImage img {
+    width: 100%!important;
+}
+#sp-right .k2ItemsBlock ul li img {
+  width: 100%;
+}
+.lt-blog .k2ItemsBlock ul li:nth-child(1) img {
+    width:  100%;
+}
+.lt-blog .k2ItemsBlock ul li {
+    width: 50%;
+    float: left;
+}
+.lt-blog .k2ItemsBlock ul li:nth-child(n+1) {
+    width: 47%;
+    margin-left: 3%;
+}
+.search form input {
+  	width: 100%!important;
+}
+/***** PRODUCTS *****/
+.hikashop_subcontainer {
+    border-radius: 0!important;
+}
+img.hikashop_child_image {
+    height: 90px!important;
+    display: inline-block;
+}
+.hikashop_product_image_subdiv {
+    max-width: 100%;
+}
+#hikashop_product_bottom_part {
+    position: absolute;
+    width: 50%;
+    top: 25%;
+    right: 0;
+}
+.hikashop_product_price_full span {
+    font-size: 25px;
+    font-family: Raleway!important;
+    font-style: normal;
+}
+.hikashop_cart_input_button {
+    color: #fff!important;
+    text-transform: uppercase;
+    border-radius: 0;
+    padding: 10px 30px!important;
+}
+.hikashop_product_name a {
+    font-size: 16px;
+}
+.hikashop_product_listing_image {
+    -webkit-transition: 0.4s ease-in-out;
+    -moz-transition: 0.4s ease-in-out;
+    -ms-transition: 0.4s ease-in-out;
+    -o-transition: 0.4s ease-in-out;
+    transition: 0.4s ease-in-out;
+}
+.hikashop_product:hover .hikashop_product_listing_image {
+  	transform:rotateY(180deg);
+	-ms-transform:rotateY(180deg);
+	-webkit-transform:rotateY(180deg);
+}
+/***** CLIENTS *****/
+.lt-sub-clients {
+    text-align: center;
+}
+.lt-sub-clients img {
+    opacity: 0.7;
+    display: block;
+    margin: 0 auto;
+    transition: all 400ms ease 0s;
+}
+.lt-sub-clients img:hover {
+    cursor: pointer;
+    opacity: 1;
+    transition: all 400ms ease 0s;
+}
+/* Refine Page Builder */
+#sp-page-builder .sppb-section-title.sppb-text-center .sppb-title-subheading {
+    margin: 0 auto;
+}
+.lt-page-service i {
+  margin-top: 10px;
+}
+.sp-simpleportfolio-img {
+    width: 100%;
+}
+/* Banner */
+.get-quickstart {
+    bottom: 0;
+    position: fixed;
+    z-index: 999;
+}
+.pro-edition-banner {
+    margin-bottom: 0;
+    margin-left: 0;
+}
+.download-quickstart-banner {
+    margin-bottom: -25px;
+    opacity: 0;
+    padding-left: 75px;
+    position: relative;
+    transition: all 200ms ease 0s;
+}
+.download-quickstart:hover .download-quickstart-banner {
+    opacity: 1;
+    transition: all 200ms ease 0s;
+}
+.pro-edition-banner img {
+    width: 60%;
+}
+.get-unlimited {
+    bottom: 0;
+    margin-top: 20px;
+    position: fixed;
+    right: 280px;
+}
+.get-unlimited-link {
+    margin-bottom: 5px;
+}
+.get-unlimited {
+    z-index: 999;
+}
+.get-unlimited-list {
+    display: none;
+    margin-left: 0;
+}
+.get-unlimited-list li {
+    color: #fff;
+    list-style: outside none none;
+}
+.get-unlimited:hover .get-unlimited-list {
+    display: block;
+    transition: all 200ms ease 0s;
+}
+.get-unlimited-list img {
+}
+.get-unlimited-link a {
+    background: #5ba0d0 none repeat scroll 0 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px 140px 8px 10px;
+}
+.get-unlimited-link a:hover {
+    color: #fff;
+}
+#sp-user1 .sp-module {
+    margin-top: 0;
+}
+#sp-user1 {
+  	min-height: 0;
+}
+@media (max-width: 767px) {
+    #sp-user1 {
+        display: none;
+    }
+}
+/* Portfolio */
+.projects-filter a {
+    padding: 8px 15px;
+    font-size: 1em;
+    border-radius: 0;
+    text-transform: uppercase;
+}
+.projects-filter a {
+    color: #fff;
+    background: #2d2d2d;
+}
+.projects-filter ul li {
+    background: none;
+}
+.projects-filter ul {
+    text-align: center;
+}
+.projects-filter {
+    border-bottom: none;
+}
+.projects-wrapper .project-img img {
+    width: 100%;
+}
+
+/* Canvas Menu */
+.offcanvas-menu .menu .nav-child.small {
+    padding-left: 15px;
+}
+/* Refine Layout */
+body.com-k2 #sp-right .sp-module .sp-module-title {
+    border-bottom: 5px solid #ccc;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 25px 0 20px;
+    padding-bottom: 15px;
+    text-transform: uppercase;
+}
+#sp-right .sp-module .sp-module-title {
+    border-bottom: 5px solid #ccc;
+    font-size: 18px;
+    font-weight: 700;
+    padding-bottom: 15px;
+    text-transform: uppercase;
+}
+.projects-wrapper .project-img .project-img-extra h5 a {
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 700;
+}
