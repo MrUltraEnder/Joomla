@@ -32,15 +32,14 @@ class VirtuemartControllerPlugin extends VmController
 	 *
 	 * @access	public
 	 */
-	function Plugin()
-	{
+	function display($cachable = false, $urlparams = false)  {
 
 		if(!vmAccess::manager()){
 			return false;
 		}
 
 		$type = vRequest::getCmd('type', 'vmcustom');
-		$typeWhiteList = array('vmshopper','vmcustom','vmcalculation','vmpayment','vmshipment', 'vmuserfield');
+		$typeWhiteList = array('vmshopper','vmcustom','vmcalculation','vmpayment','vmshipment', 'vmuserfield', 'vmextended');
 		if(!in_array($type,$typeWhiteList)) return false;
 		$name = vRequest::getString('name','');
 

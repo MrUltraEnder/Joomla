@@ -2,15 +2,15 @@
 <extension type="package" version="3.9" method="upgrade">
 	<name>English United States Language Pack</name>
 	<packagename>en-US</packagename>
-	<version>3.9.3.1</version>
-	<creationDate>February 2019</creationDate>
+	<version>3.9.5.1</version>
+	<creationDate>April 2019</creationDate>
 	<author>stevec4</author>
 	<authorEmail>stevec4@comcast.net</authorEmail>
 	<authorUrl>www.joomla.org</authorUrl>
 	<copyright>Copyright (C) 2005 - 2019 Open Source Matters. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 
-<description>3.9.3.1 Joomla! English (United States) Language Package</description>
+<description>3.9.5.1 Joomla! English (United States) Language Package</description>
 <blockChildUninstall>true</blockChildUninstall>
 <files>
         <file type="language" client="administrator" id="en-US">admin_en-US.zip</file>

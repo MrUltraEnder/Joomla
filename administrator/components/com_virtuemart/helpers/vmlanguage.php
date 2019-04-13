@@ -1,4 +1,6 @@
 <?php
+defined ('_JEXEC') or die();
+
 /**
  * vmLanguage class
  *
@@ -8,6 +10,7 @@
  * @subpackage Language
  * @author Max Milbers
  * @copyright Copyright (c) 2016 - 2017 VirtueMart Team. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL 2, see COPYRIGHT.php
  */
 
 class vmLanguage {

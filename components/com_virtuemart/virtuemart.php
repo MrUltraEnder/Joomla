@@ -2,7 +2,7 @@
 if( !defined( '_JEXEC' ) ) die( 'Direct Access to '.basename(__FILE__).' is not allowed.' );
 /**
 *
-* @version $Id: virtuemart.php 9851 2018-05-30 07:41:14Z Milbo $
+* @version $Id: virtuemart.php 9882 2018-06-20 12:25:32Z Milbo $
 * @package VirtueMart
 * @subpackage core
 * @author Max Milbers
@@ -131,6 +131,6 @@ if (class_exists($_class)) {
     	$mainframe = JFactory::getApplication();
     	$mainframe->redirect(JRoute::_ ('index.php?option=com_virtuemart&view=virtuemart', FALSE));
     } else {
-    	JError::raise(E_ERROR,'404','Not found');
+		throw new RuntimeException(sprintf('VirtueMart controller not found `%s`.', $_class), 404);
     }
 }

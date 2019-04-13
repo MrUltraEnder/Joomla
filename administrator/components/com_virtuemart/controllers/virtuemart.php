@@ -69,7 +69,7 @@ class VirtuemartControllerVirtuemart extends VmController {
 
 		if(!empty($host) AND !empty($ackey)) {
 
-			$link = '//extensions.virtuemart.net/index.php?option=com_virtuemart&view=plugin&name=istraxx_download_byhost&ackey='.base64_encode( $ackey ).'&host='.$host.'&vmlang='.VmConfig::$vmlangTag.'&sku=VMMS&vmver='.vmVersion::$RELEASE;
+			$link = 'https://extensions.virtuemart.net/index.php?option=com_virtuemart&view=plugin&name=istraxx_download_byhost&ackey='.base64_encode( $ackey ).'&host='.$host.'&vmlang='.VmConfig::$vmlangTag.'&sku=VMMS&vmver='.vmVersion::$RELEASE;
 
 			$opts = array(
 				'https'=>array(
@@ -80,22 +80,23 @@ class VirtuemartControllerVirtuemart extends VmController {
 			);
 			$context = stream_context_create($opts);
 
-			$request = file_get_contents('https:'.$link, false, $context);
+			$request = file_get_contents($link, false, $context);
 
 			if(!empty($request)) {
-				if(preg_match('@(error|access denied)@i', $request)) {
-					//return false;
-				} else {
-					$data = json_decode($request);
+				/*if(preg_match('@(error|access denied)@i', $request)) {
+					return false;
+				} else {*/
+					$datat = json_decode($request);
 
-					if(empty($data->res) or empty($data->html)){
+					if(empty($datat->res) or empty($datat->html)){
 						vmdebug('Data is empty',$data);
-						$data = new stdClass();
+						//$data = new stdClass();
 						$data->msg = 'Error getting validation file';
 					} else {
+						$data = $datat;
 						$data = $this->nag($data);
 					}
-				}
+				//}
 			}
 		}
 		echo vmJsApi::safe_json_encode($data);

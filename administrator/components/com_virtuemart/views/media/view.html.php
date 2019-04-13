@@ -13,7 +13,7 @@
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: view.html.php 9843 2018-05-18 22:39:36Z Milbo $
+* @version $Id: view.html.php 9906 2018-08-03 09:29:40Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -90,7 +90,13 @@ class VirtuemartViewMedia extends VmViewAdmin {
 				);
 			$this->lists['search_role'] = VmHTML::selectList('search_role', vRequest::getVar('search_role'),$options,1,'','onchange="this.form.submit();" style="width:180px"');
 
-			$this->files = $model->getFiles(false,false,$virtuemart_product_id,$cat_id);
+			$findUnusedMedias = vRequest::getWord('findUnusedMedias', false);
+			if($findUnusedMedias){
+				$this->files = $model->findUnusedMedias();
+			} else {
+				$this->files = $model->getFiles(false,false,$virtuemart_product_id,$cat_id);
+			}
+
 
 			$this->pagination = $model->getPagination();
 

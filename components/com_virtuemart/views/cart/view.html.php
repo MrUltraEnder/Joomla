@@ -16,7 +16,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: view.html.php 9851 2018-05-30 07:41:14Z Milbo $
+ * @version $Id: view.html.php 9939 2018-09-24 16:24:39Z Milbo $
  */
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
@@ -501,7 +501,7 @@ class VirtueMartViewCart extends VmView {
 		}
 
 		$j='jQuery(document).ready(function(){
-    form = jQuery("#checkoutFormSubmit");
+    var form = jQuery("#checkoutFormSubmit");
     jQuery(".output-shipto").find(":radio").change(function(){
 		form.attr("task","checkout");
 		'.$updF.'

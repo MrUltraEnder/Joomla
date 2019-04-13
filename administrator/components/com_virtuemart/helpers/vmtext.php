@@ -1,4 +1,7 @@
 <?php
+
+defined ('_JEXEC') or die();
+
 /**
  * Class for getting with language keys translated text. The original code was written by joomla Platform 11.1
  *

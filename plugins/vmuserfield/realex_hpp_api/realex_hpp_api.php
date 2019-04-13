@@ -7,7 +7,7 @@ defined('_JEXEC') or die();
  * Realex User Field plugin
  *
  * @author Valerie Isaksen
- * @version $Id: realex_hpp_api.php 9773 2018-03-05 18:59:44Z alatak $
+ * @version $Id: realex_hpp_api.php 9821 2018-04-16 18:04:39Z Milbo $
  * @package VirtueMart
  * @subpackage userfield
  * Copyright (C) 2004 - 2018 Virtuemart Team. All rights reserved.

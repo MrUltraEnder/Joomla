@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
  * @version $Id$
  */
 
-if (!class_exists( 'VmConfig' )) require(JPATH_ROOT .'/administrator/components/com_virtuemart/helpers/config.php');
+
 
 jimport('joomla.form.formfield');
 
@@ -30,6 +30,7 @@ class JFormFieldVmcategories extends JFormField {
 
 	protected function getInput() {
 
+		if (!class_exists( 'VmConfig' )) require(JPATH_ROOT .'/administrator/components/com_virtuemart/helpers/config.php');
 		VmConfig::loadConfig();
 		vmLanguage::loadJLang('com_virtuemart');
 

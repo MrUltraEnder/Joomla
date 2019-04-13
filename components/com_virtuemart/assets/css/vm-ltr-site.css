@@ -982,6 +982,12 @@ span.addtocart-button input.addtocart-button:hover, span.addtocart-button input.
   text-align: left;
 }
 
+.control-buttons .reg_text {
+  float: left;
+  margin: 0 20px 0 0;
+  text-align: left;
+}
+
 #userForm select,.width80{
   width: 80%;
 }

@@ -1,0 +1,10 @@
+/*
+@component QuickDownload
+@copyright Copyright (C) 2013 Ionut Lupu
+@website : http://www.ionutlupu.me
+@license GNU General Public License version 2 or later; see license.txt
+*/
+
+.icon-48-quickdownload { background-image : url("../images/icon-48-quickdownload.png");}
+.icon-48-files { background-image : url("../images/icon-48-files.png");}
+.icon-48-codes { background-image : url("../images/icon-48-codes.png");}

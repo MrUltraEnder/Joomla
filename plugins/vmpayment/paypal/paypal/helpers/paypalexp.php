@@ -298,8 +298,10 @@ class PaypalHelperPayPalExp extends PaypalHelperPaypal {
 
 		$post_variables['CANCELURL'] = JURI::root() . 'index.php?option=com_virtuemart&view=cart&expresscheckout=cancel&Itemid=' . vRequest::getInt('Itemid') . '&lang=' . vRequest::getCmd('lang', '');
 
-		if(!empty($this->_method->offer_credit)){
-			$post_variables['USERSELECTEDFUNDINGSOURCE'] = 'Finance';
+		if(!empty($this->_method->offer_credit) or !empty($this->_method->enable_smart_buttons)){
+			if(!empty($this->_method->offer_credit)){
+				$post_variables['USERSELECTEDFUNDINGSOURCE'] = 'Finance';
+			}
 			$post_variables['version'] = "116.0";
 		}
 

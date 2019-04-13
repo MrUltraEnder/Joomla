@@ -100,8 +100,8 @@ vmJsApi::vmValidator();
 
 if(VmConfig::get('oncheckout_ajax',false)){
 	vmJsApi::addJScript('updDynamicListeners',"
-if (typeof Virtuemart.containerSelector === 'undefined') Virtuemart.containerSelector = '#cart-view';
-if (typeof Virtuemart.container === 'undefined') Virtuemart.container = jQuery(Virtuemart.containerSelector);
+if (typeof Virtuemart.containerSelector === 'undefined') { Virtuemart.containerSelector = '#cart-view'; }
+if (typeof Virtuemart.container === 'undefined') { Virtuemart.container = jQuery(Virtuemart.containerSelector); }
 
 jQuery(document).ready(function() {
 	if (Virtuemart.container)
@@ -111,7 +111,7 @@ jQuery(document).ready(function() {
 
 $orderDoneLink = JRoute::_('index.php?option=com_virtuemart&view=cart&task=orderdone');
 
-vmJsApi::addJScript('vm.checkoutFormSubmit',"
+vmJsApi::addJScript('vm-checkoutFormSubmit',"
 Virtuemart.bCheckoutButton = function(e) {
 	e.preventDefault();
 	jQuery(this).vm2front('startVmLoading');
@@ -138,7 +138,7 @@ jQuery(document).ready(function($) {
 	");
 
 if( !VmConfig::get('oncheckout_ajax',false)) {
-	vmJsApi::addJScript('vm.STisBT',"
+	vmJsApi::addJScript('vm-STisBT',"
 		jQuery(document).ready(function($) {
 
 			if ( $('#STsameAsBTjs').is(':checked') ) {

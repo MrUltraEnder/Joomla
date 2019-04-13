@@ -13,14 +13,13 @@
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: edit.php 9844 2018-05-22 18:47:37Z Milbo $
+* @version $Id: edit.php 9881 2018-06-20 09:03:58Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
 
-// Implement Joomla's form validation
-vmJsApi::vmValidator();
+
 vmJsApi::css('vmpanels'); // VM_THEMEURL
 ?>
 

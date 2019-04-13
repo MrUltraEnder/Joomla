@@ -1,4 +1,7 @@
 <?php
+
+defined ('_JEXEC') or die();
+
 /**
  * virtuemart table class, with some additional behaviours.
  *
@@ -180,9 +183,9 @@ class vmJsApi{
 					$script = trim($script,chr(13));
 					$script = trim($script,chr(10));
 					if($cdata===false){
-						$html .= '<script id="'.$name.'_js" type="text/javascript">//<![CDATA[ '.chr(10).$script.' //]]>'.chr(10).'</script>';
+						$html .= '<script id="'.$name.'-js" type="text/javascript">//<![CDATA[ '.chr(10).$script.' //]]>'.chr(10).'</script>';
 					} else {
-						$html .= '<script id="'.$name.'_js" type="text/javascript"> '.$script.' </script>';
+						$html .= '<script id="'.$name.'-js" type="text/javascript"> '.$script.' </script>';
 					}
 				}
 
@@ -380,7 +383,7 @@ class vmJsApi{
 				//This is necessary though and should not be removed without rethinking the whole construction
 				$v .= "usefancy = false;\n";
 			}
-			vmJsApi::addJScript('vm.vars',$v,false,true,true);
+			vmJsApi::addJScript('vm-vars',$v,false,true,true);
 			$e = false;
 		}
 	}
@@ -446,7 +449,7 @@ jQuery(document).ready(function() { // GALT: Start listening for dynamic content
 		}
 		VmJsApi::jSite();
 
-		self::addJScript('vm.countryState'.$prefix,'
+		self::addJScript('vm-countryState'.$prefix,'
 		jQuery(document).ready( function($) {
 			$("#'.$prefix.'virtuemart_country_id'.$suffix.'").vm2front("list",{dest : "#'.$prefix.'virtuemart_state_id'.$suffix.'",ids : "'.$stateIds.'",prefiks : "'.$prefix.'"});
 		});
@@ -581,11 +584,8 @@ jQuery(document).ready(function($) {
 		}
 
 		// Implement Joomla's form validation
-		if(version_compare(JVERSION, '3.0.0', 'ge')) {
-			JHtml::_('behavior.formvalidator');
-		} else {
-			JHtml::_('behavior.formvalidation');
-		}
+		JHtml::_('behavior.formvalidator');
+		self::vmVariables();
 
 		$regfields = array();
 		if(empty($userFields)){
@@ -603,115 +603,19 @@ jQuery(document).ready(function($) {
 		}
 
 		//vmdebug('vmValidator $regfields',$regfields);
-		$jsRegfields = implode("','",$regfields);
-		$js = "
-
-	function setDropdownRequiredByResult(id,prefiks){
-		//console.log('setDropdownRequiredByResult '+prefiks+id);
-		var results = 0;
-
-		var cField = jQuery('#'+prefiks+id+'_field');
-		if(typeof cField!=='undefined' && cField.length > 0){
-			var lField = jQuery('[for=\"'+prefiks+id+'_field\"]');
-			var chznField = jQuery('#'+prefiks+id+'_field_chzn');
-
-			if(chznField.length > 0) {
-			// in case of chznFields
-				results = chznField.find('.chzn-results li').length;
-			} else {
-				//native selectboxes
-				results = cField.find('option').length;
-			}
-
-			if(results<2){
-				cField.removeClass('required');
-				cField.removeAttr('required');
-
-				if (typeof lField!=='undefined') {
-					lField.removeClass('invalid');
-					lField.attr('aria-invalid', 'false');
-					//console.log('Remove invalid lfield',id);
-				}
-			} else if(cField.attr('aria-required')=='true'){
-				cField.addClass('required');
-				cField.attr('required','required');
-
-				lField.addClass('invalid');
-				lField.attr('aria-invalid', 'true');
-			}
-		}
-	}
-
-	function setChznRequired(id,prefiks){
-		//console.log('setChznRequired ',id);
-		var cField = jQuery('#'+prefiks+id+'_field');
-		if(typeof cField!=='undefined' && cField.length > 0){
-
-			var chznField = jQuery('#'+prefiks+id+'_field_chzn');
-			if(chznField.length > 0) {
-				var aField = chznField.find('a');
-				var lField = jQuery('[for=\"'+prefiks+id+'_field\"]');
-
-				if(cField.attr('aria-invalid')=='true'){
-					//console.log('setChznRequired set invalid');
-					aField.addClass('invalid');
-					lField.addClass('invalid');
-				} else {
-					//console.log('setChznRequired set valid');
-					aField.removeClass('invalid');
-					lField.removeClass('invalid');
-				}
-			}
-		}
-	}
-
-
-	function myValidator(f, r) {
-
-		var regfields = ['".$jsRegfields."'];
-
-		var requ = '';
-		if(r == true){
-			requ = 'required';
-		}
-
-		for	(i = 0; i < regfields.length; i++) {
-			var elem = jQuery('#'+regfields[i]+'_field');
-			elem.attr('class', requ);
-		}
-
-		setDropdownRequiredByResult('virtuemart_country_id','');
-		setDropdownRequiredByResult('virtuemart_state_id','');
-
-		var prefiks = '".$prefiks."';
-		if(prefiks!=''){
-			setDropdownRequiredByResult('virtuemart_country_id',prefiks);
-			setDropdownRequiredByResult('virtuemart_state_id',prefiks);
-		}
-
-
-		if (document.formvalidator.isValid(f)) {
-			if (jQuery('#recaptcha_wrapper').is(':hidden') && (r == true)) {
-				jQuery('#recaptcha_wrapper').show();
-			} else {
-				return true;	//sents the form, we dont use js.submit()
-			}
+		if(empty($regfields)){
+			$jsRegfields = '[]';
 		} else {
-			setChznRequired('virtuemart_country_id','');
-			setChznRequired('virtuemart_state_id','');
-			if(prefiks!=''){
-				setChznRequired('virtuemart_country_id',prefiks);
-				setChznRequired('virtuemart_state_id',prefiks);
-			}
-			if (jQuery('#recaptcha_wrapper').is(':hidden') && (r == true)) {
-				jQuery('#recaptcha_wrapper').show();
-			}
-			var msg = '" .addslashes (vmText::_ ('COM_VIRTUEMART_MISSING_REQUIRED_JS'))."';
-			alert(msg + ' ');
+			$jsRegfields = "['".implode("','",$regfields)."']";
 		}
-		return false;
-	}";
-		vmJsApi::addJScript('vm.validator',$js);
+
+		$js = "Virtuemart.regfields = ".$jsRegfields.";
+Virtuemart.prefiks = '".$prefiks."';
+Virtuemart.requiredMsg = '" .addslashes (vmText::_ ('COM_VIRTUEMART_MISSING_REQUIRED_JS'))."';
+
+";
+		vmJsApi::addJScript('vm-validator',$js);
+		vmJsApi::addJScript('vmvalidator');
 	}
 
 	// Virtuemart product and price script
@@ -749,10 +653,28 @@ jQuery(document).ready(function($) {
 	 */
 	static function cssSite() {
 
-		if (!VmConfig::get ('css', TRUE)) return FALSE;
-
 		static $cssSite;
 		if ($cssSite) return;
+
+		// we load one common css and put styles in there
+		// that we need and which are can't be covered by bootstrap
+		$bootstrapVersion = VmConfig::get('bootstrap', '');
+		if ($bootstrapVersion !== '') {
+			// Load The Common CSS File
+			$cssFile = 'vm-' . $bootstrapVersion . '-common';
+			vmJsApi::css($cssFile);
+
+			// Right To Left Support
+			if (JFactory::getDocument()->getDirection() == 'rtl') {
+				$cssFile = 'vm-' . $bootstrapVersion . '-common-rtl';
+				vmJsApi::css($cssFile);
+			}
+			return FALSE;
+		}
+
+		if (!VmConfig::get('css', TRUE)) {
+			return FALSE;
+		}
 
 		// Get the Page direction for right to left support
 		$document = JFactory::getDocument ();

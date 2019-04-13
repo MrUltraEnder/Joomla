@@ -1,4 +1,6 @@
 <?php
+defined ('_JEXEC') or die();
+
 /**
  * abstract controller class containing get,store,delete,publish and pagination
  *

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config addfieldpath="/libraries/regularlabs/fields">
+	<fieldset name="templates" label="ATP_DEFAULT_SETTINGS">
+		<field name="@loadlanguage" type="rl_loadlanguage" extension="com_templates" />
+		<field name="heading_title" type="list" default="0"
+			   label="ATP_HEADING_TITLE"
+			   description="ATP_HEADING_TITLE_DESC">
+			<option value="0">ATP_ADVANCED_TEMPLATE_MANAGER</option>
+			<option value="1">COM_TEMPLATES_MANAGER</option>
+		</field>
+
+		<field name="show_thumbs" type="radio" class="btn-group btn-group-yesno" default="1"
+			   label="ATP_SHOW_THUMBS"
+			   description="ATP_SHOW_THUMBS_DESC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<field name="show_color" type="radio" class="btn-group btn-group-yesno" default="1"
+			   label="ATP_SHOW_COLOR"
+			   description="ATP_SHOW_COLOR_DESC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<field name="main_colors" type="textarea" rows="4"
+			   default="none,#049cdb,#46a546,#9d261d,#ffc40d,#f89406,#c3325f,#7a43b6,#ffffff,#999999,#555555,#000000"
+			   label="ATP_COLORS"
+			   description="ATP_COLORS_DESC"
+			   showon="show_color:1" />
+
+		<field name="show_note" type="list" default="2"
+			   label="ATP_SHOW_DESCRIPTION_IN_LIST"
+			   description="ATP_SHOW_DESCRIPTION_IN_LIST_DESC">
+			<option value="0">JNO</option>
+			<option value="1">RL_TOOLTIP</option>
+			<option value="2">ATP_NAME_COLUMN</option>
+			<option value="3">ATP_EXTRA_COLUMN</option>
+		</field>
+
+		<field name="show_notes" type="list" default="1"
+			   label="ATP_SHOW_NOTES_TAB"
+			   description="ATP_SHOW_NOTES_TAB_DESC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<field name="show_switch" type="radio" class="btn-group btn-group-yesno" default="0"
+			   label="ATP_SHOW_SWITCH"
+			   description="ATP_SHOW_SWITCH_DESC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<field name="show_update_notification" type="radio" class="btn-group btn-group-yesno" default="1"
+			   label="RL_SHOW_UPDATE_NOTIFICATION"
+			   description="RL_SHOW_UPDATE_NOTIFICATION_DESC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<field name="@notice_show_copyright" type="rl_onlypro"
+			   label="RL_SHOW_COPYRIGHT"
+			   description="RL_SHOW_COPYRIGHT_DESC" />
+	</fieldset>
+
+	<fieldset name="extra" label="RL_SHOW_ASSIGNMENTS">
+		<field name="@show_assignto_menuitems" type="radio" class="btn-group btn-group-yesno" default="1"
+			   label="RL_MENU_ITEMS"
+			   description="JOPTION_REQUIRED">
+			<option value="1">JYES</option>
+		</field>
+		<field name="show_assignto_homepage" type="radio" class="btn-group btn-group-yesno" default="1"
+			   label="RL_HOME_PAGE"
+			   description="ATP_SHOW_PUBLISHING_OPTION">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="show_assignto_date" type="radio" class="btn-group btn-group-yesno" default="1"
+			   label="RL_DATE_TIME"
+			   description="ATP_SHOW_PUBLISHING_OPTION">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="show_assignto_languages" type="radio" class="btn-group btn-group-yesno" default="1"
+			   label="RL_LANGUAGES"
+			   description="ATP_SHOW_PUBLISHING_OPTION">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="show_assignto_content" type="radio" class="btn-group btn-group-yesno" default="1"
+			   label="RL_JCONTENT"
+			   description="ATP_SHOW_PUBLISHING_OPTION">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="show_assignto_tags" type="radio" class="btn-group btn-group-yesno" default="1"
+			   label="RL_TAGS"
+			   description="ATP_SHOW_PUBLISHING_OPTION">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="show_assignto_usergrouplevels" type="radio" class="btn-group btn-group-yesno" default="1"
+			   label="RL_USER_GROUP_LEVELS"
+			   description="ATP_SHOW_PUBLISHING_OPTION">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="@notice_show_assignto_users" type="rl_onlypro"
+			   label="RL_USERS"
+			   description="ATP_SHOW_PUBLISHING_OPTION" />
+		<field name="show_assignto_components" type="radio" class="btn-group btn-group-yesno" default="1"
+			   label="RL_COMPONENTS"
+			   description="ATP_SHOW_PUBLISHING_OPTION">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="show_assignto_templates" type="radio" class="btn-group btn-group-yesno" default="1"
+			   label="RL_TEMPLATES"
+			   description="ATP_SHOW_PUBLISHING_OPTION">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="show_assignto_urls" type="radio" class="btn-group btn-group-yesno" default="1"
+			   label="RL_URL"
+			   description="ATP_SHOW_PUBLISHING_OPTION">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="show_assignto_devices" type="radio" class="btn-group btn-group-yesno" default="1"
+			   label="RL_DEVICES"
+			   description="ATP_SHOW_PUBLISHING_OPTION">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="show_assignto_os" type="radio" class="btn-group btn-group-yesno" default="1"
+			   label="RL_OS"
+			   description="ATP_SHOW_PUBLISHING_OPTION">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="show_assignto_browsers" type="radio" class="btn-group btn-group-yesno" default="1"
+			   label="RL_BROWSERS"
+			   description="ATP_SHOW_PUBLISHING_OPTION">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="@notice_show_assignto_ips" type="rl_onlypro"
+			   label="RL_IPS"
+			   description="ATP_SHOW_PUBLISHING_OPTION" />
+		
+		<field name="@notice_show_assignto_geo" type="rl_onlypro"
+			   label="RL_GEO"
+			   description="ATP_SHOW_PUBLISHING_OPTION" />
+		
+		<field name="@notice_show_assignto_easyblog" type="rl_onlypro"
+			   label="RL_EASYBLOG"
+			   description="ATP_SHOW_PUBLISHING_OPTION" />
+		
+		<field name="@notice_show_assignto_flexicontent" type="rl_onlypro"
+			   label="RL_FLEXICONTENT"
+			   description="ATP_SHOW_PUBLISHING_OPTION" />
+		
+		<field name="@notice_show_assignto_form2content" type="rl_onlypro"
+			   label="RL_FORM2CONTENT"
+			   description="ATP_SHOW_PUBLISHING_OPTION" />
+		
+		<field name="@notice_show_assignto_k2" type="rl_onlypro"
+			   label="RL_K2"
+			   description="ATP_SHOW_PUBLISHING_OPTION" />
+		
+		<field name="@notice_show_assignto_zoo" type="rl_onlypro"
+			   label="RL_ZOO"
+			   description="ATP_SHOW_PUBLISHING_OPTION" />
+		
+		<field name="@notice_show_assignto_akeebasubs" type="rl_onlypro"
+			   label="RL_AKEEBASUBS"
+			   description="ATP_SHOW_PUBLISHING_OPTION" />
+		
+		<field name="@notice_show_assignto_hikashop" type="rl_onlypro"
+			   label="RL_HIKASHOP"
+			   description="ATP_SHOW_PUBLISHING_OPTION" />
+		
+		<field name="@notice_show_assignto_mijoshop" type="rl_onlypro"
+			   label="RL_MIJOSHOP"
+			   description="ATP_SHOW_PUBLISHING_OPTION" />
+		
+		<field name="@notice_show_assignto_redshop" type="rl_onlypro"
+			   label="RL_REDSHOP"
+			   description="ATP_SHOW_PUBLISHING_OPTION" />
+		
+		<field name="@notice_show_assignto_virtuemart" type="rl_onlypro"
+			   label="RL_VIRTUEMART"
+			   description="ATP_SHOW_PUBLISHING_OPTION" />
+		
+		<field name="@notice_show_assignto_cookieconfirm" type="rl_onlypro"
+			   label="RL_COOKIECONFIRM"
+			   description="ATP_SHOW_PUBLISHING_OPTION" />
+		
+		<field name="@notice_show_assignto_php" type="rl_onlypro"
+			   label="RL_PHP"
+			   description="ATP_SHOW_PUBLISHING_OPTION" />
+	</fieldset>
+
+	<fieldset name="RL_ACTIONLOG">
+		<field name="enable_actionlog" type="radio" class="btn-group" default="1"
+			   label="RL_ENABLE_ACTIONLOG"
+			   description="RL_ENABLE_ACTIONLOG_DESC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="actionlog_events" type="checkboxes" multiple="true"
+			   default="create,update,delete,change_default,template_copy,files"
+			   checked="create,update,delete,change_default,template_copy,files"
+			   label="RL_ACTIONLOG_EVENTS"
+			   description="RL_ACTIONLOG_EVENTS_DESC"
+			   showon="enable_actionlog:1">
+			<option value="create">RL_ACTION_CREATE</option>
+			<option value="update">RL_ACTION_UPDATE</option>
+			<option value="delete">RL_ACTION_DELETE</option>
+			<option value="change_default">RL_ACTION_CHANGE_DEFAULT</option>
+			<option value="template_copy">ATP_ACTION_TEMPLATE_COPY</option>
+			<option value="files">ATP_ACTION_FOLDER_FILE_ACTIONS</option>
+		</field>
+	</fieldset>
+
+	<fieldset name="notice_permissions" label="JCONFIG_PERMISSIONS_LABEL">
+		<field name="@notice_rules" type="note" class="alert alert-info"
+			   description="ATP_USE_CORE_RULES,&lt;a href=&quot;index.php?option=com_config&amp;view=component&amp;component=com_templates#permissions&quot;>,&lt;/a>" />
+	</fieldset>
+</config>

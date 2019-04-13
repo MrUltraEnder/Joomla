@@ -26,3 +26,11 @@
 2019-04-07 01:10:06 ERROR vmError: Attention product is parent, please delete the children first
 2019-04-07 01:10:06 ERROR vmError: Attention product is parent, please delete the children first
 2019-04-07 01:10:06 ERROR vmError: Attention product is parent, please delete the children first
+2019-04-12 21:31:55 ERROR vmError: Failed to parse the Currency Converter XML document.
+2019-04-12 21:31:55 ERROR vmError: The content: &lt;html&gt;
+&lt;head&gt;&lt;title&gt;301 Moved Permanently&lt;/title&gt;&lt;/head&gt;
+&lt;body bgcolor=&quot;white&quot;&gt;
+&lt;center&gt;&lt;h1&gt;301 Moved Permanently&lt;/h1&gt;&lt;/center&gt;
+&lt;hr&gt;&lt;center&gt;Myra&lt;/center&gt;
+&lt;/body&gt;
+&lt;/html&gt;

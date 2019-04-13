@@ -14,7 +14,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: cart.php 9868 2018-06-13 08:45:36Z Milbo $
+ * @version $Id: cart.php 9930 2018-09-14 08:07:41Z Milbo $
  */
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
@@ -84,7 +84,7 @@ class VirtueMartCart {
 	var $pricesUnformatted = array();
 
 	private static $_cart = null;
-
+	var $tempCart = false;
 	var $useSSL = 1;
 
 	public function __construct() {
@@ -151,9 +151,10 @@ class VirtueMartCart {
 					self::$_cart->pricesCurrency				= $sessionCart->pricesCurrency;
 					self::$_cart->paymentCurrency				= $sessionCart->paymentCurrency;
 
-					self::$_cart->_guest						=  $sessionCart->_guest;
+					self::$_cart->_guest						= $sessionCart->_guest;
 					self::$_cart->_inCheckOut 					= $sessionCart->_inCheckOut;
 					self::$_cart->_inConfirm					= $sessionCart->_inConfirm;
+					self::$_cart->_redirected					= $sessionCart->_redirected;
 					self::$_cart->_dataValidated				= $sessionCart->_dataValidated;
 					self::$_cart->_confirmDone					= $sessionCart->_confirmDone;
 					self::$_cart->STsameAsBT					= $sessionCart->STsameAsBT;
@@ -327,6 +328,9 @@ class VirtueMartCart {
 	}
 
 	public function storeCart($cartDataToStore = false){
+
+		if($this->tempCart) return;
+
 		$adminID = vmAccess::getBgManagerId();
 		$currentUser = JFactory::getUser();
 		if(!$currentUser->guest && (!$adminID || $adminID == $currentUser->id)){
@@ -371,9 +375,9 @@ class VirtueMartCart {
 	 */
 	public function setCartIntoSession($storeDb = false, $forceWrite = false) {
 
+		if($this->tempCart) return;
+
 		$session = JFactory::getSession();
-
-
 		$sessionCart = $this->getCartDataToStore();
 		$sessionCart = json_encode($sessionCart);
 		$session->set('vmcart', $sessionCart,'vm');
@@ -416,6 +420,7 @@ class VirtueMartCart {
 		$sessionCart->_guest						= JFactory::getUser()->guest;
 		$sessionCart->_inCheckOut 					= $this->_inCheckOut;
 		$sessionCart->_inConfirm					= $this->_inConfirm;
+		$sessionCart->_redirected 					= $this->_redirected;
 		$sessionCart->_dataValidated				= $this->_dataValidated;
 		$sessionCart->_confirmDone					= $this->_confirmDone;
 		$sessionCart->STsameAsBT					= $this->STsameAsBT;
@@ -1120,7 +1125,7 @@ class VirtueMartCart {
 
 		//Show cart and checkout data overview
 		if($this->_redirected){
-			$this->_redirected = false;
+			//$this->_redirected = false;
 		} else {
 			$this->_inCheckOut = false;
 		}
@@ -1330,6 +1335,7 @@ class VirtueMartCart {
 
 				if($fld->type=='checkbox'){
 					$tmp = vRequest::getInt($name,0);
+					$this->cartfields[$name] = $tmp;
 				} else {
 					$tmp = vRequest::getString($name,null);
 					if(isset($tmp)){

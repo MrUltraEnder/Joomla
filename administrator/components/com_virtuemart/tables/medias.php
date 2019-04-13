@@ -13,7 +13,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: medias.php 9831 2018-05-07 13:45:33Z Milbo $
+ * @version $Id: medias.php 9888 2018-06-21 07:22:10Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -181,182 +181,133 @@ class TableMedias extends VmTable {
 
 		if (empty($this->file_mimetype)) {
 
-			$rel_path = str_replace ('/', DS, $this->file_url);
-
-			//The function mime_content_type is deprecated, we may use
-			/*function _mime_content_type($filename)
-			{
-				$result = new finfo();
-
-				if (is_resource($result) === true)
-				{
-					return $result->file($filename, FILEINFO_MIME_TYPE);
-				}
-
-				return false;
+			if (!$this->file_is_forSale) {
+				$lastIndexOfSlash = strrpos ($this->file_url, '/');
+			} else {
+				$lastIndexOfSlash = strrpos ($this->file_url, DS);
 			}
-			if (function_exists ('mime_content_type')) {
-				$ok = TRUE;
-				$app = JFactory::getApplication ();
+			$name = substr ($this->file_url, $lastIndexOfSlash + 1);
+			$file_extension = strtolower (JFile::getExt ($name));
 
-				if (!$this->file_is_forSale) {
-					$this->file_mimetype = mime_content_type (JPATH_ROOT . DS . $rel_path);
-				}
-				else {
-					$this->file_mimetype = mime_content_type ($rel_path);
-				}
-
-				if (!empty($this->file_mimetype)) {
-					if ($this->file_mimetype == 'directory') {
-						vmError ('cant store this media, is a directory ' . $rel_path);
-						return FALSE;
-					}
-					else {
-						if (strpos ($this->file_mimetype, 'corrupt') !== FALSE) {
-							vmError ('cant store this media, Document corrupt: Cannot read summary info ' . $rel_path);
-							return FALSE;
-						}
-					}
-				}
-				else {
-					vmError ('Couldnt resolve mime ' . $rel_path);
-					return FALSE;
-				}
-
+			if (empty($name)) {
+				vmError (vmText::_ ('COM_VIRTUEMART_NO_MEDIA'));
 			}
-			else {*/
 
+			//images
+			elseif($file_extension === 'jpg' or $file_extension === 'jpeg' or $file_extension === 'jpe'){
+				$this->file_mimetype = 'image/jpeg';
+			}
+			elseif($file_extension === 'gif'){
+				$this->file_mimetype = 'image/gif';
+			}
+			elseif($file_extension === 'png'){
+				$this->file_mimetype = 'image/png';
+			}
+			elseif($file_extension === 'bmp'){
+				vmInfo(vmText::sprintf('COM_VIRTUEMART_MEDIA_SHOULD_NOT_BMP',$name));
+				$notice = true;
+			}
 
-				if (!$this->file_is_forSale) {
-					$lastIndexOfSlash = strrpos ($this->file_url, '/');
-					$name = substr ($this->file_url, $lastIndexOfSlash + 1);
-					$file_extension = strtolower (JFile::getExt ($name));
-				}
-				else {
-					$lastIndexOfSlash = strrpos ($this->file_url, DS);
-					$name = substr ($this->file_url, $lastIndexOfSlash + 1);
-					$file_extension = strtolower (JFile::getExt ($name));
-				}
+			//audio
+			elseif($file_extension === 'mp3'){
+				$this->file_mimetype = 'audio/mpeg';
+			}
+			elseif($file_extension === 'ogg'){
+				$this->file_mimetype = 'audio/ogg';
+			}
+			elseif($file_extension === 'oga'){
+				$this->file_mimetype = 'audio/vorbis';
+			}
+			elseif($file_extension === 'wma'){
+				$this->file_mimetype = 'audio-/x-ms-wma';
+			}
 
-				if (empty($name)) {
-					vmError (vmText::_ ('COM_VIRTUEMART_NO_MEDIA'));
-				}
+			//video
+			//added missing mimetypes: m2v
+			elseif( $file_extension === 'mp4' or $file_extension === 'mpe' or $file_extension === 'mpeg' or $file_extension === 'mpg' or $file_extension === 'mpga' or $file_extension === 'm2v'){
+				$this->file_mimetype = 'video/mpeg';
+			}
+			elseif($file_extension === 'avi'){
+				$this->file_mimetype = 'video/x-msvideo';
+			}
 
-				//images
-				elseif($file_extension === 'jpg' or $file_extension === 'jpeg' or $file_extension === 'jpe'){
-					$this->file_mimetype = 'image/jpeg';
-				}
-				elseif($file_extension === 'gif'){
-					$this->file_mimetype = 'image/gif';
-				}
-				elseif($file_extension === 'png'){
-					$this->file_mimetype = 'image/png';
-				}
-				elseif($file_extension === 'bmp'){
-					vmInfo(vmText::sprintf('COM_VIRTUEMART_MEDIA_SHOULD_NOT_BMP',$name));
-					$notice = true;
-				}
+			elseif($file_extension === 'qt' or $file_extension === 'mov'){
+				$this->file_mimetype = 'video/quicktime';
+			}
+			elseif($file_extension === 'wmv'){
+				$this->file_mimetype = 'video/x-ms-wmv';
+			}
 
-				//audio
-				elseif($file_extension === 'mp3'){
-					$this->file_mimetype = 'audio/mpeg';
-				}
-				elseif($file_extension === 'ogg'){
-					$this->file_mimetype = 'audio/ogg';
-				}
-				elseif($file_extension === 'oga'){
-					$this->file_mimetype = 'audio/vorbis';
-				}
-				elseif($file_extension === 'wma'){
-					$this->file_mimetype = 'audio-/x-ms-wma';
-				}
+			//Added missing formats
+			elseif($file_extension === '3gp'){
+				$this->file_mimetype = 'video/3gpp';
+			}
+			elseif($file_extension === 'ogv'){
+				$this->file_mimetype = 'video/ogg';
+			}
+			elseif($file_extension === 'flv'){
+				$this->file_mimetype = 'video/x-flv';
+			}
 
-				//video
-				//added missing mimetypes: m2v
-				elseif( $file_extension === 'mp4' or $file_extension === 'mpe' or $file_extension === 'mpeg' or $file_extension === 'mpg' or $file_extension === 'mpga' or $file_extension === 'm2v'){
-					$this->file_mimetype = 'video/mpeg';
-				}
-				elseif($file_extension === 'avi'){
-					$this->file_mimetype = 'video/x-msvideo';
-				}
+			elseif($file_extension === 'f4v'){
+				$this->file_mimetype = 'video/x-f4v';
+			}
 
-				elseif($file_extension === 'qt' or $file_extension === 'mov'){
-					$this->file_mimetype = 'video/quicktime';
-				}
-				elseif($file_extension === 'wmv'){
-					$this->file_mimetype = 'video/x-ms-wmv';
-				}
+			elseif($file_extension === 'm4v'){
+				$this->file_mimetype = 'video/x-m4v';
+			}
 
-				//Added missing formats
-				elseif($file_extension === '3gp'){
-					$this->file_mimetype = 'video/3gpp';
-				}
-				elseif($file_extension === 'ogv'){
-					$this->file_mimetype = 'video/ogg';
-				}
-				elseif($file_extension === 'flv'){
-					$this->file_mimetype = 'video/x-flv';
-				}
+			elseif($file_extension === 'webm'){
+				$this->file_mimetype = 'video/webm';
+			}
 
-				elseif($file_extension === 'f4v'){
-					$this->file_mimetype = 'video/x-f4v';
-				}
+			//applications
+			elseif($file_extension === 'zip'){
+				$this->file_mimetype = 'application/zip';
+			}
+			elseif($file_extension === 'pdf'){
+				$this->file_mimetype = 'application/pdf';
+			}
+			elseif($file_extension === 'gz'){
+				$this->file_mimetype = 'application/x-gzip';
+			}
+			elseif($file_extension === 'exe'){
+				$this->file_mimetype = 'application/octet-stream';
+			}
+			elseif($file_extension === 'swf'){
+				$this->file_mimetype = 'application/x-shockwave-flash';
+			}
+			//missing types
+			elseif($file_extension === 'doc'){
+				$this->file_mimetype = 'application/msword';
+			}
+			elseif($file_extension === 'docx'){
+				$this->file_mimetype = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+			}
+			elseif($file_extension === 'xls'){
+				$this->file_mimetype = 'application/vnd.ms-excel';
+			}
+			elseif($file_extension === 'xlsx'){
+				$this->file_mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+			}
+			elseif($file_extension === 'ppt'){
+				$this->file_mimetype = 'application/vnd.ms-powerpoint';
+			}
+			elseif($file_extension === 'pptx'){
+				$this->file_mimetype = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+			}
+			elseif($file_extension === 'txt'){
+				$this->file_mimetype = 'text/plain';
+			}
+			elseif($file_extension === 'rar'){
+				$this->file_mimetype = 'application/x-rar-compressed';
+			}
 
-				elseif($file_extension === 'm4v'){
-					$this->file_mimetype = 'video/x-m4v';
-				}
+			else {
+				vmInfo (vmText::sprintf ('COM_VIRTUEMART_MEDIA_SHOULD_HAVE_MIMETYPE', $name));
+				$notice = TRUE;
+			}
 
-				elseif($file_extension === 'webm'){
-					$this->file_mimetype = 'video/webm';
-				}
-
-				//applications
-				elseif($file_extension === 'zip'){
-					$this->file_mimetype = 'application/zip';
-				}
-				elseif($file_extension === 'pdf'){
-					$this->file_mimetype = 'application/pdf';
-				}
-				elseif($file_extension === 'gz'){
-					$this->file_mimetype = 'application/x-gzip';
-				}
-				elseif($file_extension === 'exe'){
-					$this->file_mimetype = 'application/octet-stream';
-				}
-				elseif($file_extension === 'swf'){
-					$this->file_mimetype = 'application/x-shockwave-flash';
-				}
-				//missing types
-				elseif($file_extension === 'doc'){
-					$this->file_mimetype = 'application/msword';
-				}
-				elseif($file_extension === 'docx'){
-					$this->file_mimetype = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-				}
-				elseif($file_extension === 'xls'){
-					$this->file_mimetype = 'application/vnd.ms-excel';
-				}
-				elseif($file_extension === 'xlsx'){
-					$this->file_mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-				}
-				elseif($file_extension === 'ppt'){
-					$this->file_mimetype = 'application/vnd.ms-powerpoint';
-				}
-				elseif($file_extension === 'pptx'){
-					$this->file_mimetype = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
-				}
-				elseif($file_extension === 'txt'){
-					$this->file_mimetype = 'text/plain';
-				}
-				elseif($file_extension === 'rar'){
-					$this->file_mimetype = 'application/x-rar-compressed';
-				}
-
-				else {
-					vmInfo (vmText::sprintf ('COM_VIRTUEMART_MEDIA_SHOULD_HAVE_MIMETYPE', $name));
-					$notice = TRUE;
-				}
-			//}
 		}
 
 		//Nasty small hack, should work as long the word for default is in the language longer than 3 words and the first

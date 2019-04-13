@@ -265,20 +265,33 @@ class Migrator extends VmModel{
 			return $msg = vmText::sprintf('COM_VIRTUEMART_UPDATE_PORT_MEDIA_RESULT_NOT_FINISH', $countTotal);
 		}
 
-		$url = VmConfig::get('media_vendor_path');
-		$type = 'vendor';
-		$count = $this->_portMediaByType($url, $type);
-		$countTotal += $count;
-		$this->_app->enqueueMessage(vmText::sprintf('COM_VIRTUEMART_UPDATE_PORT_MEDIA_RESULT', $count, $type, $url));
-
 		$url = VmConfig::get('forSale_path');
 		$type = 'forSale';
 		$count = $this->_portMediaByType($url, $type);
 		$countTotal += $count;
 		$this->_app->enqueueMessage(vmText::sprintf('COM_VIRTUEMART_UPDATE_PORT_MEDIA_RESULT', $count, $type, $url));
 
+		if((microtime(true)-$this->starttime) >= ($this->maxScriptTime)){
+			return $msg = vmText::sprintf('COM_VIRTUEMART_UPDATE_PORT_MEDIA_RESULT_NOT_FINISH', $countTotal);
+		}
 
+		$url = VmConfig::get('media_vendor_path');
+		$type = 'vendor';
+		$count = $this->_portMediaByType($url, $type);
+		$countTotal += $count;
+		$this->_app->enqueueMessage(vmText::sprintf('COM_VIRTUEMART_UPDATE_PORT_MEDIA_RESULT', $count, $type, $url));
+
+		//We went through the whole process in correct time, so lets delete the progress table
+		$this->dropMediaSynchroniseProzess();
 		return $msg = vmText::sprintf('COM_VIRTUEMART_UPDATE_PORT_MEDIA_RESULT_FINISH', $countTotal);
+	}
+
+	private function dropMediaSynchroniseProzess(){
+
+		$q = 'DELETE FROM `#__virtuemart_migration_oldtonew_ids` WHERE  `id`=1; ';
+		$this->_db->setQuery($q);
+		$this->_db->execute();
+
 	}
 
 	private function _portMediaByType($url, $type){

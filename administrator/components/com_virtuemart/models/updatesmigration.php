@@ -13,7 +13,7 @@
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: updatesmigration.php 9868 2018-06-13 08:45:36Z Milbo $
+* @version $Id: updatesmigration.php 9936 2018-09-21 15:55:19Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -182,15 +182,15 @@ class VirtueMartModelUpdatesMigration extends VmModel {
 
 	$lang = VmConfig::$vmlang;
 
-	$filename = VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart'.DS.'install'.DS.'install_sample_data_'.$lang.'.sql';
+	$filename = VMPATH_ROOT .'/administrator/components/com_virtuemart/install/install_sample_data_'.$lang.'.sql';
 	if (!file_exists($filename)) {
-		$filename = VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart'.DS.'install'.DS.'install_sample_data.sql';
+		$filename = VMPATH_ROOT .'/administrator/components/com_virtuemart/install/install_sample_data.sql';
 	}
 
 	//copy sampel media
-	$src = VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart' .DS. 'assets' .DS. 'images' .DS. 'vmsampleimages';
+	$src = VMPATH_ROOT .'/administrator/components/com_virtuemart/assets/images/vmsampleimages';
 	// 			if(version_compare(JVERSION,'1.6.0','ge')) {
-	$dst = VMPATH_ROOT .DS. 'images' .DS. 'virtuemart';
+	$dst = VMPATH_ROOT .'/images/virtuemart';
 
 	$this->recurse_copy($src,$dst);
 
@@ -223,7 +223,7 @@ class VirtueMartModelUpdatesMigration extends VmModel {
 			//Create table of the plugin
 			$url = '/plugins/vmshipment/weight_countries';
 
-			if (!class_exists ('plgVmShipmentWeight_countries')) require(VMPATH_ROOT . DS . $url . DS . 'weight_countries.php');
+			if (!class_exists ('plgVmShipmentWeight_countries')) require(VMPATH_ROOT .'/'. $url .'/weight_countries.php');
 			$this->installPluginTable('plgVmShipmentWeight_countries','#__virtuemart_shipment_plg_weight_countries','Shipment Weight Countries Table');
 		}
 
@@ -243,7 +243,7 @@ class VirtueMartModelUpdatesMigration extends VmModel {
 
 			$url = '/plugins/vmpayment/standard';
 
-			if (!class_exists ('plgVmPaymentStandard')) require(VMPATH_ROOT . DS . $url . DS . 'standard.php');
+			if (!class_exists ('plgVmPaymentStandard')) require(VMPATH_ROOT .'/'. $url .'/standard.php');
 			$this->installPluginTable('plgVmPaymentStandard','#__virtuemart_payment_plg_standard','Payment Standard Table');
 		}
 		vmInfo(vmText::_('COM_VIRTUEMART_SAMPLE_DATA_INSTALLED'));
@@ -340,19 +340,19 @@ class VirtueMartModelUpdatesMigration extends VmModel {
 		$dispatcher = JDispatcher::getInstance();
 		$dispatcher->trigger('onVmSqlRemove', $this);
 
-		$filename = VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart'.DS.'install'.DS.'uninstall_essential_data.sql';
+		$filename = VMPATH_ROOT .'/administrator/components/com_virtuemart/install/uninstall_essential_data.sql';
 		$this->execSQLFile($filename);
 
-		$filename = VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart'.DS.'install'.DS.'uninstall_required_data.sql';
+		$filename = VMPATH_ROOT .'/administrator/components/com_virtuemart/install/uninstall_required_data.sql';
 		$this->execSQLFile($filename);
 
-		$filename = VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart'.DS.'install'.DS.'install.sql';
+		$filename = VMPATH_ROOT .'/administrator/components/com_virtuemart/install/install.sql';
 		$this->execSQLFile($filename);
 
-		$filename = VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart'.DS.'install'.DS.'install_essential_data.sql';
+		$filename = VMPATH_ROOT .'/administrator/components/com_virtuemart/install/install_essential_data.sql';
 		$this->execSQLFile($filename);
 
-		$filename = VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart'.DS.'install'.DS.'install_required_data.sql';
+		$filename = VMPATH_ROOT .'/administrator/components/com_virtuemart/install/install_required_data.sql';
 		$this->execSQLFile($filename);
 
 
@@ -369,13 +369,13 @@ class VirtueMartModelUpdatesMigration extends VmModel {
 
 		$this->removeAllVMTables();
 
-		$filename = VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart'.DS.'install'.DS.'install.sql';
+		$filename = VMPATH_ROOT .'/administrator/components/com_virtuemart/install/install.sql';
 		$this->execSQLFile($filename);
 
-		$filename = VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart'.DS.'install'.DS.'install_essential_data.sql';
+		$filename = VMPATH_ROOT .'/administrator/components/com_virtuemart/install/install_essential_data.sql';
 		$this->execSQLFile($filename);
 
-		$filename = VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart'.DS.'install'.DS.'install_required_data.sql';
+		$filename = VMPATH_ROOT .'/administrator/components/com_virtuemart/install/install_required_data.sql';
 		$this->execSQLFile($filename);
 
 		$updater = new GenericTableUpdater();
@@ -395,7 +395,7 @@ class VirtueMartModelUpdatesMigration extends VmModel {
 
 		// Check that sql files exists before reading. Otherwise raise error for rollback
 		if ( !file_exists($sqlfile) ) {
-			vmError('execSQLFile, SQL file not found!');
+			vmError('execSQLFile, SQL file not found! '.$sqlfile);
 			return false;
 		}
 
@@ -513,7 +513,7 @@ class VirtueMartModelUpdatesMigration extends VmModel {
 		$dispatcher = JDispatcher::getInstance();
 		$dispatcher->trigger('onVmSqlRemove', $this);
 
-		$filename = VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart'.DS.'install'.DS.'uninstall_data.sql';
+		$filename = VMPATH_ROOT .'/administrator/components/com_virtuemart/install/uninstall_data.sql';
 		$this->execSQLFile($filename);
 		$tables = array('categories','manufacturers','manufacturercategories','paymentmethods','products','shipmentmethods','vendors');
 		$db = JFactory::getDBO();
@@ -532,7 +532,7 @@ class VirtueMartModelUpdatesMigration extends VmModel {
 		//"TRUNCATE TABLE IS FASTER and reset the primary Keys;
 
 		//install required data again
-		$filename = VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart'.DS.'install'.DS.'install_required_data.sql';
+		$filename = VMPATH_ROOT .'/administrator/components/com_virtuemart/install/install_required_data.sql';
 		$this->execSQLFile($filename);
 
 		return true;
@@ -636,9 +636,9 @@ class VirtueMartModelUpdatesMigration extends VmModel {
 	 */
 	static function getExtensionXmlFileName($type, $element, $dst ){
 		if ($type=='plugin') {
-			$extensionXmlFileName=  $dst. DS . $element.  '.xml';
+			$extensionXmlFileName=  $dst .'/'. $element.  '.xml';
 		} else if ($type=='module'){
-			$extensionXmlFileName = $dst. DS . $element.DS . $element. '.xml';
+			$extensionXmlFileName = $dst .'/'. $element .'/'. $element. '.xml';
 		} else {
 			$extensionXmlFileName = $dst;//;. DS . $element.DS . $element. '.xml';
 		}

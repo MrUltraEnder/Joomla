@@ -93,6 +93,8 @@ class VirtuemartViewCustom extends VmViewAdmin {
     											<option value="1">JYES</option>';
 						} else if($push[1]=='string'){
 							$formString .= 'type="text" >'.chr(10);
+						} else if($push[1]=='area'){
+							$formString .= 'type="textarea" cols="10">'.chr(10);
 						}
 						$formString .= chr(10).'</field>'.chr(10);
 					}

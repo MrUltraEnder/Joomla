@@ -4,7 +4,7 @@
  * Realex payment plugin
  *
  * @author Valerie Isaksen
- * @version $Id: remote_cc_form.php 9420 2017-01-12 09:35:36Z Milbo $
+ * @version $Id: remote_cc_form.php 9821 2018-04-16 18:04:39Z Milbo $
  * @package VirtueMart
  * @subpackage payment
  * Copyright (C) 2004 - 2018 Virtuemart Team. All rights reserved.

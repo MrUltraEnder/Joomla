@@ -14,7 +14,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: product_edit_information.php 9829 2018-05-02 21:01:06Z Milbo $
+ * @version $Id: product_edit_information.php 9953 2018-10-01 12:04:43Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -32,7 +32,7 @@ $i=0;
 		$parentRel = '';
 		if ($this->product->product_parent_id) {
 			$parentRel = vmText::sprintf('COM_VIRTUEMART_PRODUCT_FORM_PARENT',JHtml::_('link', JRoute::_('index.php?option=com_virtuemart&view=product&task=edit&virtuemart_product_id='.$this->product->product_parent_id),
-				($this->product_parent->product_name), array('title' => vmText::_('COM_VIRTUEMART_EDIT').' '.vRequest::vmSpecialChars($this->product_parent->product_name))).' =&gt; ');
+				($this->product_parent->product_name), array('title' => vmText::_('COM_VIRTUEMART_EDIT').' '.$this->product_parent->product_name)).' =&gt; ');
 		}
 		echo vmText::sprintf('COM_VIRTUEMART_PRODUCT_INFORMATION',$parentRel);
 		echo ' id: '.$this->product->virtuemart_product_id ?>
@@ -113,8 +113,8 @@ $i=0;
 				<?php echo vmText::_('COM_VIRTUEMART_CATEGORY_S') ?>
 			</td>
 			<td>
-				<select class="vm-drop" id="categories" name="categories[]" multiple="multiple"  data-placeholder="<?php echo vmText::_('COM_VIRTUEMART_DRDOWN_SELECT_SOME_OPTIONS')  ?>" size="100" >
-
+				<select class="vm-drop" id="categories" name="categories[]" multiple="multiple"  data-placeholder="<?php echo vmText::_('COM_VIRTUEMART_DRDOWN_SELECT_SOME_OPTIONS')  ?>" >
+                    <option value="-2" selected="selected">Do not store</option>
 				</select>			</td>
 			<?php
 			// It is important to have all product information in the form, since we do not preload the parent

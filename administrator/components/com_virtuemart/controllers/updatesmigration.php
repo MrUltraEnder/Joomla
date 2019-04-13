@@ -14,7 +14,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: updatesmigration.php 9831 2018-05-07 13:45:33Z Milbo $
+ * @version $Id: updatesmigration.php 9882 2018-06-20 12:25:32Z Milbo $
  */
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
@@ -380,7 +380,7 @@ class VirtuemartControllerUpdatesMigration extends VmController{
 
 		if(VmConfig::get('dangeroustools', true)){
 
-			if(!class_exists('com_virtuemartInstallerScript')) require(VMPATH_ADMIN . DS . 'install' . DS . 'script.virtuemart.php');
+			if(!class_exists('com_virtuemartInstallerScript')) require(VMPATH_ADMIN .'/install/script.virtuemart.php');
 			$updater = new com_virtuemartInstallerScript();
 			$updater->install(true);
 
@@ -389,7 +389,7 @@ class VirtuemartControllerUpdatesMigration extends VmController{
 
 			$msg = 'System and sampledata succesfull installed, user id of the mainvendor is ' . $sid;
 
-			if(!class_exists('com_virtuemart_allinoneInstallerScript')) require(VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart_allinone' . DS . 'script.vmallinone.php');
+			if(!class_exists('com_virtuemart_allinoneInstallerScript')) require(VMPATH_ROOT .'/administrator/components/com_virtuemart_allinone/script.vmallinone.php');
 			$updater = new com_virtuemart_allinoneInstallerScript(false);
 			$updater->vmInstall(true);
 
@@ -403,13 +403,11 @@ class VirtuemartControllerUpdatesMigration extends VmController{
 
 			//Now lets set some joomla variables
 			//Caching should be enabled, set to files and for 15 minutes
-			if(JVM_VERSION>2){
-				if (!class_exists( 'ConfigModelCms' )) require(VMPATH_ROOT.DS.'components'.DS.'com_config'.DS.'model'.DS.'cms.php');
-				if (!class_exists( 'ConfigModelForm' )) require(VMPATH_ROOT.DS.'components'.DS.'com_config'.DS.'model'.DS.'form.php');
-				if (!class_exists( 'ConfigModelApplication' )) require(VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_config'.DS.'model'.DS.'application.php');
-			} else {
-				if (!class_exists( 'ConfigModelApplication' )) require(VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_config'.DS.'models'.DS.'application.php');
-			}
+
+			if (!class_exists( 'ConfigModelCms' )) require(VMPATH_ROOT .'/components/com_config/model/cms.php');
+			if (!class_exists( 'ConfigModelForm' )) require(VMPATH_ROOT .'/components/com_config/model/form.php');
+			if (!class_exists( 'ConfigModelApplication' )) require(VMPATH_ROOT .'/administrator/components/com_config/model/application.php');
+
 
 			$jConfModel = new ConfigModelApplication();
 			$jConfig = $jConfModel->getData();
@@ -715,7 +713,7 @@ class VirtuemartControllerUpdatesMigration extends VmController{
 	 */
 	function updateDatabase(){
 		vRequest::vmCheckToken();
-		if(!class_exists('com_virtuemartInstallerScript')) require(VMPATH_ADMIN . DS . 'install' . DS . 'script.virtuemart.php');
+		if(!class_exists('com_virtuemartInstallerScript')) require(VMPATH_ADMIN .'/install/script.virtuemart.php');
 		$updater = new com_virtuemartInstallerScript();
 		$updater->update(false);
 		$this->setRedirect($this->redirectPath, 'Database updated');
@@ -743,7 +741,7 @@ class VirtuemartControllerUpdatesMigration extends VmController{
 	function updateDatabaseJoomla(){
 		vRequest::vmCheckToken();
 		if(JVM_VERSION<3){
-			$p = VMPATH_ADMIN.DS.'install'.DS.'joomla2.sql';
+			$p = VMPATH_ADMIN .'/install/joomla2.sql';
 		} else {
 			$p = '';
 		}

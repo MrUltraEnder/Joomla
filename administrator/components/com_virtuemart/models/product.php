@@ -7,13 +7,13 @@
  * @subpackage
  * @author Max Milbers, Patrick Kohl, Valerie Isaksen
  * @link https://virtuemart.net
- * @copyright Copyright (c) 2004 - 2014 VirtueMart Team. All rights reserved.
+ * @copyright Copyright (c) 2004 - 2018 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: product.php 9868 2018-06-13 08:45:36Z Milbo $
+ * @version $Id: product.php 9966 2018-10-07 13:29:27Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -348,7 +348,8 @@ class VirtueMartModelProduct extends VmModel {
 
 
 			if(!empty($custom_search)){
-				$this->searchcustoms = true;
+
+				if(empty($this->searchcustoms)) $this->searchcustoms = true;
 				$where[] = " ( " . implode (' OR ', $custom_search) . " ) ";
 				//$where[] = " ( " . implode (' AND ', $custom_search_value) . " AND (".implode (' OR ', $custom_search_key).")) ";
 				if($this->searchAllCats){
@@ -1098,6 +1099,11 @@ vmdebug('$limitStart',$limitStart);
 			$child->prices = $child->allPrices[$child->selectedPrice] = $this->fillVoidPrice();
 		}
 
+		$child->customfields = false;
+		$customfieldsModel = VmModel::getModel ('Customfields');
+		$child->modificatorSum = null;
+		$child->customfields = $customfieldsModel->getCustomEmbeddedProductCustomFields ($child->allIds,0,-1, true);
+
 		if ($withCalc) {
 
 			if(JFactory::getApplication()->isSite()){
@@ -1152,18 +1158,14 @@ vmdebug('$limitStart',$limitStart);
 				if ($product_available_date != '0000-00-00' and $current_date < $product_available_date) {
 					$child->availability = vmText::_('COM_VIRTUEMART_PRODUCT_AVAILABLE_DATE') .': '. JHtml::_('date', $child->product_available_date, vmText::_('DATE_FORMAT_LC4'));
 				} else if ($stockhandle == 'risetime' and VmConfig::get('rised_availability') and empty($child->product_availability)) {
-					$child->availability =  (file_exists(VMPATH_ROOT . DS . VmConfig::get('assets_general_path') . 'images/availability/' . VmConfig::get('rised_availability'))) ? JHtml::image(JURI::root() . VmConfig::get('assets_general_path') . 'images/availability/' . VmConfig::get('rised_availability', '7d.gif'), VmConfig::get('rised_availability', '7d.gif'), array('class' => 'availability')) : vmText::_(VmConfig::get('rised_availability'));
+					$child->availability =  (file_exists(VMPATH_ROOT .'/'. VmConfig::get('assets_general_path') . 'images/availability/' . VmConfig::get('rised_availability'))) ? JHtml::image(JURI::root() . VmConfig::get('assets_general_path') . 'images/availability/' . VmConfig::get('rised_availability', '7d.gif'), VmConfig::get('rised_availability', '7d.gif'), array('class' => 'availability')) : vmText::_(VmConfig::get('rised_availability'));
 
 				} else if (!empty($child->product_availability)) {
-					$child->availability = (file_exists(VMPATH_ROOT . DS . VmConfig::get('assets_general_path') . 'images/availability/' . $child->product_availability)) ? JHtml::image(JURI::root() . VmConfig::get('assets_general_path') . 'images/availability/' . $child->product_availability, $child->product_availability, array('class' => 'availability')) : vmText::_($child->product_availability);
+					$child->availability = (file_exists(VMPATH_ROOT .'/'. VmConfig::get('assets_general_path') . 'images/availability/' . $child->product_availability)) ? JHtml::image(JURI::root() . VmConfig::get('assets_general_path') . 'images/availability/' . $child->product_availability, $child->product_availability, array('class' => 'availability')) : vmText::_($child->product_availability);
 				}
 			}
 			else if ($product_available_date != '0000-00-00' and $current_date < $product_available_date) {
 				$child->availability = vmText::_('COM_VIRTUEMART_PRODUCT_AVAILABLE_DATE') .': '. JHtml::_('date', $child->product_available_date, vmText::_('DATE_FORMAT_LC4'));
-			}
-
-			if(!isset($child->customfields)){
-				$child->customfields = false;
 			}
 
 			foreach(self::$decimals as $decimal){
@@ -1599,7 +1601,7 @@ vmdebug('$limitStart',$limitStart);
 		$product->selectedPrice = 0;
 		$product->allPrices[0] = $this->fillVoidPrice();
 		$product->categories = array();
-
+		$product->allIds = array();
 		if ($front) {
 			$product->link = '';
 			$product->virtuemart_category_id = 0;
@@ -2293,21 +2295,28 @@ vmdebug('$limitStart',$limitStart);
 
 			$data = $this->updateXrefAndChildTables ($data, 'product_manufacturers');
 
-			if (!empty($data['categories']) && count ($data['categories']) > 0) {
-				if(VmConfig::get('multix','none')!='none' and !vmAccess::manager('managevendors')){
-
-					if($ven->max_cats_per_product>=0){
-						while($ven->max_cats_per_product<count($data['categories'])){
-							array_pop($data['categories']);
-						}
-					}
-
-				}
-				$data['virtuemart_category_id'] = $data['categories'];
-			} else {
-				$data['virtuemart_category_id'] = array();
+			$storeCats = true;
+			if (empty($data['categories']) or (!empty($data['categories'][0]) and $data['categories'][0]!="-2")){
+				$storeCats = true;
 			}
-			$data = $this->updateXrefAndChildTables ($data, 'product_categories');
+
+			if($storeCats){
+				if (!empty($data['categories']) && count ($data['categories']) > 0) {
+					if(VmConfig::get('multix','none')!='none' and !vmAccess::manager('managevendors')){
+
+						if($ven->max_cats_per_product>=0){
+							while($ven->max_cats_per_product<count($data['categories'])){
+								array_pop($data['categories']);
+							}
+						}
+
+					}
+					$data['virtuemart_category_id'] = $data['categories'];
+				} else {
+					$data['virtuemart_category_id'] = array();
+				}
+				$data = $this->updateXrefAndChildTables ($data, 'product_categories');
+			}
 
 			// Update waiting list
 			//TODO what is this doing?
@@ -2493,7 +2502,7 @@ vmdebug('$limitStart',$limitStart);
 	private function productCustomsfieldsClone ($virtuemart_product_id) {
 
 		$cM = VmModel::getModel('customfields');
-		$customfields = $cM->getCustomEmbeddedProductCustomFields(array($virtuemart_product_id));
+		$customfields = $cM->getCustomEmbeddedProductCustomFields(array($virtuemart_product_id),0,-1,true);
 
 		if ($customfields) {
 			foreach ($customfields as &$customfield) {
@@ -2620,18 +2629,14 @@ vmdebug('$limitStart',$limitStart);
 			$product = $this->getProduct ($product, TRUE, FALSE, TRUE,$quantity);
 		}
 
-		if (empty($product->customfields) and !empty($product->allIds)) {
+		if (empty($product->customfields) and $product->customfields!=array() and !empty($product->allIds)) {
 			$customfieldsModel = VmModel::getModel ('Customfields');
 			$product->modificatorSum = null;
-			$product->customfields = $customfieldsModel->getCustomEmbeddedProductCustomFields ($product->allIds,0,$ctype, true);
+			$product->customfields = $customfieldsModel->getCustomEmbeddedProductCustomFields ($product->allIds,0,$ctype);
 		}
 
-		// Calculate the modificator
-		$customfieldsModel = VmModel::getModel('Customfields');
-		$variantPriceModification = $customfieldsModel->calculateModificators ($product);
-
 		$calculator = calculationHelper::getInstance ();
-		$prices = $calculator->getProductPrices ($product, $variantPriceModification, $quantity);
+		$prices = $calculator->getProductPrices ($product, TRUE, $quantity);
 
 		return $prices;
 

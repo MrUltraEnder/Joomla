@@ -14,7 +14,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: config.php 9851 2018-05-30 07:41:14Z Milbo $
+ * @version $Id: config.php 9961 2018-10-02 08:40:01Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -145,7 +145,7 @@ class VirtueMartModelConfig extends VmModel {
 	 */
 	function getTCPDFFontsList() {
 
-		$dir = VMPATH_ROOT.'/libraries/tcpdf/fonts';
+		$dir = vmDefines::tcpdf() .'/fonts';
 		$result = array();
 		$specfiles = array();
 		if(is_dir($dir)) {
@@ -525,30 +525,10 @@ class VirtueMartModelConfig extends VmModel {
 		return true;
 	}
 
-	static public function getActiveVmLanguages(){
-		$langs = VmConfig::get('active_languages',false);
-		if(empty($langs)){
-			$langs = vmLanguage::getShopDefaultSiteLangTagByJoomla();
-			$langs = (array)strtolower(strtr($langs,'-','_'));
-		}
-		return $langs;
-	}
-
-	static public function installLanguageTables(){
-
-		$updater = new GenericTableUpdater();
-		$langs = self::getActiveVmLanguages();
-
-		$updater->createLanguageTables($langs);
-	}
-
 	public function setVmLanguages() {
-		$db = JFactory::getDbo();
-		$db->setQuery('SELECT lang_code FROM #__languages');
-		$options = $db->loadColumn();
 
 		$config = VmConfig::loadConfig();
-		$config->set('active_languages',$options);
+		$config->set('active_languages',array());
 
 		$lang = vmLanguage::getShopDefaultSiteLangTagByJoomla();
 		$config->set('vmDefLang',$lang);
@@ -560,6 +540,22 @@ class VirtueMartModelConfig extends VmModel {
 		$confTable->bindChecknStore($data);
 
 		VmConfig::loadConfig(true);
+	}
+
+	static public function getActiveVmLanguages(){
+		$active_lang = VmConfig::get('active_languages',false);
+		$deflang = vmLanguage::getShopDefaultSiteLangTagByJoomla();
+		$langs = array_merge($active_lang, $deflang);
+		$langs = array_unique($langs);
+		return $langs;
+	}
+
+	static public function installLanguageTables(){
+
+		$updater = new GenericTableUpdater();
+		$langs = self::getActiveVmLanguages();
+
+		$updater->createLanguageTables($langs);
 	}
 
 	static public function checkConfigTableExists(){

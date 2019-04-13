@@ -712,7 +712,7 @@ abstract class vmPlugin extends JPlugin {
 	 * @author Max Milbers, Valérie Isaksen
 	 */
 
-	private function _getLayoutPath ($pluginName, $group, $layout = 'default') {
+	static public function _getLayoutPath ($pluginName, $group, $layout = 'default') {
 		$layoutPath=$templatePathWithGroup=$defaultPathWithGroup='';
 		jimport ('joomla.filesystem.file');
 		// First search in the new system

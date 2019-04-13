@@ -148,6 +148,12 @@ class plgVmPaymentPaypal extends vmPSPlugin {
 			'tax_id' => array(0, 'int'),
 
 			//Layout
+			'enable_smart_buttons' => array('', 'int'),
+			'smbt_layout' => array('', 'char'),
+			'smbt_size' => array('', 'char'),
+			'smbt_shape' => array('', 'char'),
+			'smbt_color' => array('', 'char'),
+			'smbt_label' => array('', 'char'),
 			'headerBgColor' => array('', 'char'),
 			'headerHeight' => array('', 'char'),
 			'logoFont' => array('', 'char'),
@@ -312,7 +318,13 @@ class plgVmPaymentPaypal extends vmPSPlugin {
 			return NULL;
 		}
 
-		if (!$this->isExpToken($selectedMethod, $cart))  {
+		foreach ($this->methods as $currentMethod) {
+			if($currentMethod->paypalproduct == 'exp') {
+				$selectedMethod = $currentMethod; break;
+			}
+		}
+
+		if (empty($selectedMethod->enable_smart_buttons) and !$this->isExpToken($selectedMethod, $cart))  {
 			$payment_advertise[] = $this->getExpressCheckoutHtml($cart, true);
 		}
 
@@ -547,7 +559,7 @@ class plgVmPaymentPaypal extends vmPSPlugin {
 							jimport('joomla.environment.browser');
 							$browser = JBrowser::getInstance();
 
-
+							if(empty($paypalInterface->response['EMAILLINK'])) $paypalInterface->response['EMAILLINK'] ='';
 							// this code is only called incase of iframe (templateD), in all other cases redirecttopayapl has been done
 							$html = $this->renderByLayout('hostediframe', array("url" => $paypalInterface->response['EMAILLINK'],
 								"isMobile" => $browser->isMobile()
@@ -671,7 +683,7 @@ class plgVmPaymentPaypal extends vmPSPlugin {
 		$this->debugLog($payment, 'plgVmOnPaymentResponseReceived', 'debug', false);
 
 		//$currency = CurrencyDisplay::getInstance('', $order['details']['BT']->order_currency);
-		$currency = CurrencyDisplay::getInstance('', $order['details']['BT']->payment_currency_id);
+		$currency = CurrencyDisplay::getInstance($order['details']['BT']->payment_currency_id);
 		$paypal_data = new stdClass();
 		if ($payment->paypal_fullresponse) {
 			$paypal_data = json_decode($payment->paypal_fullresponse);

@@ -4,7 +4,7 @@
  * Amazon payment plugin
  *
  * @author Valerie Isaksen
- * @version $Id: ipnurl.php 9185 2016-02-25 13:51:01Z Milbo $
+ * @version $Id: ipnurl.php 9186 2016-02-25 22:38:19Z Milbo $
  * @package VirtueMart
  * @subpackage payment
  * Copyright (C) 2004 - 2018 Virtuemart Team. All rights reserved.

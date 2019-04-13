@@ -1092,7 +1092,7 @@ class plgVmpaymentAuthorizenet extends vmPSPlugin {
 	 * @return mixed Null for methods that aren't active, text (HTML) otherwise
 	 * @author Valerie Isaksen
 	 */
-	protected function plgVmOnShowOrderFEPayment($virtuemart_order_id, $virtuemart_paymentmethod_id, &$payment_name) {
+	public function plgVmOnShowOrderFEPayment($virtuemart_order_id, $virtuemart_paymentmethod_id, &$payment_name) {
 
 		$this->onShowOrderFE($virtuemart_order_id, $virtuemart_paymentmethod_id, $payment_name);
 		return TRUE;
@@ -1107,7 +1107,7 @@ class plgVmpaymentAuthorizenet extends vmPSPlugin {
 	 * @return mixed Null when for payment methods that were not selected, text (HTML) otherwise
 	 * @author Valerie Isaksen
 	 */
-	function plgVmOnShowOrderPrintPayment($order_number, $method_id) {
+	public function plgVmOnShowOrderPrintPayment($order_number, $method_id) {
 
 		return parent::onShowOrderPrint($order_number, $method_id);
 	}

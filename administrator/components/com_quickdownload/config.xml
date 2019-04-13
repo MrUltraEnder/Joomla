@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+
+<fieldset name="general" label="COM_QUICKDOWNLOAD_OPTIONS_GENERAL" description="">
+
+	<field name="firstpage" default="" buttons="0" width="330" type="editor" filter="safehtml" label="COM_QUICKDOWNLOAD_OPTIONS_FIRST_PAGE" description="COM_QUICKDOWNLOAD_OPTIONS_FIRST_PAGE"/>
+	
+	<field name="spacer1" type="spacer" hr="true" />
+	
+  	<field name="users" type="radio" default="0" label="COM_QUICKDOWNLOAD_OPTIONS_USERS_TYPE" description="COM_QUICKDOWNLOAD_OPTIONS_USERS_TYPE" class="btn-group btn-group-yesno">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+	</field>
+	
+</fieldset>
+
+<fieldset name="front-display" label="COM_QUICKDOWNLOAD_OPTIONS_FRONT" description="">
+  	<field name="show_file_type" type="radio" default="0" label="COM_QUICKDOWNLOAD_OPTIONS_SHOW_FILE_TYPE" description="COM_QUICKDOWNLOAD_OPTIONS_SHOW_FILE_TYPE" class="btn-group btn-group-yesno">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+	</field>
+	
+	  <field name="show_file_size" type="radio" default="0" label="COM_QUICKDOWNLOAD_OPTIONS_SHOW_FILE_SIZE" description="COM_QUICKDOWNLOAD_OPTIONS_SHOW_FILE_SIZE" class="btn-group btn-group-yesno">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+	</field>
+</fieldset>
+
+
+<fieldset name="permissions_LABEL" description="JCONFIG_PERMISSIONS_DESC" label="JCONFIG_PERMISSIONS_LABEL">
+
+	<field name="rules" type="rules" label="JCONFIG_PERMISSIONS_LABEL" class="inputbox" filter="rules" validate="rules" component="com_quickdownload" section="component" />
+	
+</fieldset>
+
+</config>

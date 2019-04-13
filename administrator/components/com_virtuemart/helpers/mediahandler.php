@@ -8,7 +8,7 @@
  * @package	VirtueMart
  * @subpackage Helpers
  * @author Max Milbers
- * @copyright Copyright (c) 2011-2016 VirtueMart Team. All rights reserved by the author.
+ * @copyright Copyright (c) 2011-2018 VirtueMart Team. All rights reserved by the author.
  */
 
 defined('_JEXEC') or die();
@@ -450,8 +450,8 @@ class VmMediaHandler {
 	 *
 	 * @author Max Milbers
 	 */
-	function displayMediaFull(){
-		return $this->displayMediaThumb(array('id'=>'vm_display_image'),false,'',true,true);
+	function displayMediaFull($imageArgs=array('id'=>'vm_display_image'), $lightbox=false, $effect ="class='modal'",$description = true){
+		return $this->displayMediaThumb($imageArgs ,$lightbox,$effect,true,$description);
 	}
 
 	/**
@@ -605,8 +605,16 @@ class VmMediaHandler {
 		if($lightbox){
 			$image = '<img src="' . $root.$file_url . '" alt="' . $file_alt . '" ' . $args . ' />';//JHtml::image($file_url, $file_alt, $imageArgs);
 			if ($file_alt ) $file_alt = 'title="'.$file_alt.'"';
-			if ($this->file_url and pathinfo($this->file_url, PATHINFO_EXTENSION) and substr( $this->file_url, 0, 4) != "http") $href = JURI::root() .$this->file_url ;
-			else $href = $root.$file_url ;
+			if ($this->file_url and pathinfo($this->file_url, PATHINFO_EXTENSION) and substr( $this->file_url, 0, 4) != "http") {
+				if($this->file_is_forSale){
+					$href = $this->file_url ;
+				} else {
+					$href = JURI::root() .$this->file_url ;
+				}
+
+			} else {
+				$href = $root.$file_url ;
+			}
 
 			if ($this->file_is_downloadable) {
 				$lightboxImage = '<a '.$file_alt.' '.$effect.' href="'.$href.'">'.$image.$desc.'</a>';

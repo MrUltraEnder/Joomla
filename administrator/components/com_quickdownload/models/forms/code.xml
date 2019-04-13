@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="details"
+		addfieldpath="/administrator/components/com_quickdownload/models/fields">
+		
+		<field name="id" type="text" default="0" label="JGLOBAL_FIELD_ID_LABEL"
+			description="JGLOBAL_FIELD_ID_DESC" readonly="true" class="readonly" />
+			
+		<field name="title" type="text" label="COM_QUICKDOWNLOAD_CODES_TITLE"
+			description="COM_QUICKDOWNLOAD_CODES_TITLE_HELP" class="inputbox" required="true" size="30" />
+			
+		<field name="code" type="code" label="COM_QUICKDOWNLOAD_CODES_CODE"
+			description="COM_QUICKDOWNLOAD_CODES_CODE_HELP" class="inputbox" size="60"  />
+		
+		<field name="created" type="text" label="COM_QUICKDOWNLOAD_CODES_CREATED" default="0"
+			description="COM_QUICKDOWNLOAD_CODES_CREATED_HELP" class="inputbox" size="22" />
+			
+		<field name="limit_hits_total" type="text" label="COM_QUICKDOWNLOAD_CODES_LIMIT_HITS_TOTAL" default="0"
+			description="COM_QUICKDOWNLOAD_CODES_LIMIT_HITS_TOTAL_HELP" class="inputbox" size="22" />
+		
+		<field name="limit_hits_day" type="text" label="COM_QUICKDOWNLOAD_CODES_LIMIT_HITS_DAY" default="0"
+			description="COM_QUICKDOWNLOAD_CODES_LIMIT_HITS_DAY_HELP" class="inputbox" size="22" />
+		
+		<field name="limit_publish_from" type="calendar"
+			label="COM_QUICKDOWNLOAD_CODES_LIMIT_LIMIT_PUBLISH_FROM" description="COM_QUICKDOWNLOAD_CODES_LIMIT_LIMIT_PUBLISH_FROM_HELP"
+			class="inputbox" size="22" format="%Y-%m-%d %H:%M:%S" filter="user_utc"  />
+			
+		<field name="limit_publish_to" type="calendar"
+			label="COM_QUICKDOWNLOAD_CODES_LIMIT_LIMIT_PUBLISH_TO" description="COM_QUICKDOWNLOAD_CODES_LIMIT_LIMIT_PUBLISH_TO_HELP"
+			class="inputbox" size="22" format="%Y-%m-%d %H:%M:%S" filter="user_utc" />
+						
+		<field name="published" type="list" class="inputbox"
+			default="1" label="COM_QUICKDOWNLOAD_CODES_STATE"
+			description="COM_QUICKDOWNLOAD_CODES_STATE">
+			<option value="0">COM_QUICKDOWNLOAD_UNPUBLISHED
+			</option>
+			<option value="1">COM_QUICKDOWNLOAD_PUBLISHED
+			</option>
+		
+		<field name="hits" type="text" label="COM_QUICKDOWNLOAD_CODES_HITS" default="0"
+			description="COM_QUICKDOWNLOAD_CODES_HITS_HELP" class="inputbox" size="22" />
+
+		</field>
+	</fieldset>
+</form>

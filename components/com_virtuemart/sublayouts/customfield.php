@@ -34,7 +34,7 @@ class VirtueMartCustomFieldRenderer {
 			$currency = CurrencyDisplay::getInstance ();
 		}
 
-		foreach($customfields as $k => $customfield){
+		foreach($customfields as $key => $customfield){
 
 
 			if(!isset($customfield->display))$customfield->display = '';
@@ -45,7 +45,7 @@ class VirtueMartCustomFieldRenderer {
 
 				JPluginHelper::importPlugin ('vmcustom');
 				$dispatcher = JDispatcher::getInstance ();
-				$ret = $dispatcher->trigger ('plgVmOnDisplayProductFEVM3', array(&$product, &$customfields[$k]));
+				$ret = $dispatcher->trigger ('plgVmOnDisplayProductFEVM3', array(&$product, &$customfields[$key]));
 				continue;
 			}
 
@@ -135,19 +135,19 @@ class VirtueMartCustomFieldRenderer {
 					$attribs = array('class'=>$class.' cvselection no-vm-bind','style'=>'min-width:70px;');
 
 					$view = 'productdetails';
-					$attribs['reload'] = '1';
+					$attribs['data-reload'] = '1';
 					if(VmConfig::get ('jdynupdate', TRUE)){
 						$view = vRequest::getCmd('view','productdetails');
 						if($view == 'productdetails' or ($customfield->browseajax and $view == 'category')){
 							$attribs['data-dynamic-update'] = '1';
-							unset($attribs['reload']);
+							unset($attribs['data-reload']);
 						} else {
 							$view = 'productdetails';
 						}
 					}
 
 					foreach($customfield->selectoptions as $k => $soption){
-
+						$html .= '<div class="custom_field_C_container">';
 						$options = array();
 						$selected = false;
 						if(isset($dropdowns[$k])){
@@ -200,7 +200,7 @@ class VirtueMartCustomFieldRenderer {
 						$attribs['data-cvsel'] = 'field' . $customfield->virtuemart_customfield_id ;
 						$fname = $fieldname.'['.$k.']';
 						$html .= JHtml::_ ($selectType, $options, $fname, $attribs , "value", "text", $selected,$idTagK);
-
+						$html .= '</div>';
 					}
 
 					$Itemid = vRequest::getInt('Itemid',''); // '&Itemid=127';
@@ -263,12 +263,12 @@ class VirtueMartCustomFieldRenderer {
 					$selectedFound = false;
 
 					$view = 'productdetails';
-					$attribs['reload'] = '1';
+					$attribs['data-reload'] = '1';
 					if(VmConfig::get ('jdynupdate', TRUE)){
 						$view = vRequest::getCmd('view','productdetails');
 						if($view == 'productdetails' or ($customfield->browseajax and $view == 'category')){
 							$attribs['data-dynamic-update'] = '1';
-							unset($attribs['reload']);
+							unset($attribs['data-reload']);
 						} else {
 							$view = 'productdetails';
 						}
@@ -343,9 +343,9 @@ class VirtueMartCustomFieldRenderer {
 
 
 					$och = '';
-					if(!empty($attribs['reload'])){
-						$och = ' onchange="window.top.location.href=this.options[this.selectedIndex].value" reload=1';
-						unset($attribs['reload']);
+					if(!empty($attribs['data-reload'])){
+						$och = ' onchange="window.top.location.href=this.options[this.selectedIndex].value" data-reload=1';
+						unset($attribs['data-reload']);
 					} else {
 						$och = ' data-dynamic-update="1"';
 						unset($attribs['data-dynamic-update']);
@@ -359,7 +359,7 @@ class VirtueMartCustomFieldRenderer {
 
 
 					$html .= JHtml::_ ('select.genericlist', $options, $fieldname, $attribs);
-					//vmdebug('My view $attribs',$attribs,$html);
+
 					vmJsApi::chosenDropDowns();
 
 					if($customfield->parentOrderable==0){
@@ -407,7 +407,7 @@ class VirtueMartCustomFieldRenderer {
 						$yearRange = '';
 						if(!empty($customfield->yearRangeStart)){
 							$d = new DateTime();
-							$d->add(new DateInterval($customfield->yearRangeStart));
+							$d->add(new DateInterval('P'.$customfield->yearRangeStart.'Y'));
 							$d = $d->format('Y');
 							$yearRange = $d;
 						} else {
@@ -416,7 +416,7 @@ class VirtueMartCustomFieldRenderer {
 
 						if(!empty($customfield->yearRangePeriod)){
 							$d = new DateTime();
-							$d->add(new DateInterval($customfield->yearRangePeriod));
+							$d->add(new DateInterval('P'.$customfield->yearRangePeriod.'Y'));
 							$d = $d->format('Y');
 							$yearRange .= ':'.$d;
 						} else {
@@ -483,7 +483,7 @@ class VirtueMartCustomFieldRenderer {
 
 							$values = explode (';', $customfield->custom_value);
 
-							foreach ($values as $key => $val) {
+							foreach ($values as $val) {
 
 								//if($val == 0 and $customfield->addEmpty){
 									//continue;
@@ -510,7 +510,7 @@ class VirtueMartCustomFieldRenderer {
 						if(!empty($customfield->is_input)){
 
 							if(!isset($selectList[$customfield->virtuemart_custom_id])) {
-								$selectList[$customfield->virtuemart_custom_id] = $k;
+								$selectList[$customfield->virtuemart_custom_id] = $key;
 								if($customfield->addEmpty){
 									if(empty($customfields[$selectList[$customfield->virtuemart_custom_id]]->options)){
 										$customfields[$selectList[$customfield->virtuemart_custom_id]]->options[0] = $emptyOption;
@@ -527,12 +527,12 @@ class VirtueMartCustomFieldRenderer {
 
 							} else {
 								$customfields[$selectList[$customfield->virtuemart_custom_id]]->options[$customfield->virtuemart_customfield_id] = $customfield;
-								unset($customfields[$k]);
+								unset($customfields[$key]);
 
 							}
 
 							$default = reset($customfields[$selectList[$customfield->virtuemart_custom_id]]->options);
-							foreach ($customfields[$selectList[$customfield->virtuemart_custom_id]]->options as &$productCustom) {
+							foreach ($customfields[$selectList[$customfield->virtuemart_custom_id]]->options as $k => $productCustom) {
 								if(!isset($productCustom->customfield_price)) $productCustom->customfield_price = 0.0;
 								if(!isset($productCustom->customfield_value)) $productCustom->customfield_value = '';
 								$price = VirtueMartModelCustomfields::renderCustomfieldPrice($productCustom, $product, $calculator);
@@ -546,6 +546,7 @@ class VirtueMartCustomFieldRenderer {
 										$productCustom->text = $trValue.' '.$price;
 									}
 								}
+								$customfields[$selectList[$customfield->virtuemart_custom_id]]->options[$k] = $productCustom;
 							}
 
 
@@ -671,7 +672,7 @@ class VirtueMartCustomFieldRenderer {
 					break;
 			}
 
-			$viewData['customfields'][$k] = $customfield;
+			$viewData['customfields'][$key] = $customfield;
 			//vmdebug('my customfields '.$type,$viewData['customfields'][$k]->display);
 		}
 
@@ -810,7 +811,12 @@ class VirtueMartCustomFieldRenderer {
 						}
 						elseif (($productCustom->field_type == 'D')) {
 							vmdebug('my date product customfield',$productCustom);
-							$value = $params;
+							if($productCustom->is_input){
+								$value = $params;
+							} else {
+								$value = $productCustom->customfield_value;
+							}
+
 						}
 						else {
 							$value = vmText::_($productCustom->customfield_value);

@@ -5,7 +5,7 @@ defined ('_JEXEC') or die('Restricted access');
 /**
  * Shipment plugin for weight_countries shipments, like regular postal services
  *
- * @version $Id: weight_countries.php 9742 2018-01-26 11:32:44Z alatak $
+ * @version $Id: weight_countries.php 9879 2018-06-19 10:13:20Z Milbo $
  * @package VirtueMart
  * @subpackage Plugins - shipment
  * @copyright Copyright (C) 2004-2012 VirtueMart Team - All rights reserved.
@@ -20,13 +20,8 @@ defined ('_JEXEC') or die('Restricted access');
  * @author Valerie Isaksen
  *
  */
-if (!class_exists ('vmPSPlugin')) {
-	require(VMPATH_PLUGINLIBS . DS . 'vmpsplugin.php');
-}
 
-/**
- *
- */
+
 class plgVmShipmentWeight_countries extends vmPSPlugin {
 
 	/**
@@ -167,10 +162,6 @@ class plgVmShipmentWeight_countries extends vmPSPlugin {
 			vmWarn ($msg);
 			vmDebug($msg, $q . " " . $db->getErrorMsg ());
 			return '';
-		}
-
-		if (!class_exists ('CurrencyDisplay')) {
-			require(JPATH_VM_ADMINISTRATOR . DS . 'helpers' . DS . 'currencydisplay.php');
 		}
 
 		$currency = CurrencyDisplay::getInstance ();
@@ -428,16 +419,11 @@ class plgVmShipmentWeight_countries extends vmPSPlugin {
 
 			return FALSE;
 		}
-		if (!class_exists('VirtueMartCart'))
-			require(VMPATH_SITE . DS . 'helpers' . DS . 'cart.php');
 
 		$html = array();
-		if (!class_exists('CurrencyDisplay'))
-			require(JPATH_VM_ADMINISTRATOR . DS . 'helpers' . DS . 'currencydisplay.php');
+
 		$currency = CurrencyDisplay::getInstance();
-
-
-
+		
 		foreach ($this->methods as $this->_currentMethod) {
 
 			if($this->_currentMethod->show_on_pdetails){

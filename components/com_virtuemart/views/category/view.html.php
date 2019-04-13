@@ -13,7 +13,7 @@
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: view.html.php 9831 2018-05-07 13:45:33Z Milbo $
+* @version $Id: view.html.php 9949 2018-10-01 11:42:43Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -210,7 +210,7 @@ class VirtuemartViewCategory extends VmView {
 		$this->orderByList = '';
 
 		$this->searchcustom = '';
-		$this->searchCustomValues = '';
+		$this->searchCustomValues = array ();
 
 		if(!empty($this->keyword) or $this->showsearch){
 			vmSetStartTime('getSearchCustom');
@@ -598,7 +598,7 @@ INNER JOIN #__virtuemart_product_categories as cat ON (pc.virtuemart_product_id=
 						if($Opts){
 							foreach( $Opts as $k => $v ) {
 								if(!isset($valueOptions[$v->customfield_value])) {
-									$valueOptions[$v->customfield_value] = $v->customfield_value;
+									$valueOptions[$v->customfield_value] = vmText::_($v->customfield_value);
 								}
 							}
 							$valueOptions = array_merge(array($emptyOption), $valueOptions);
@@ -608,7 +608,11 @@ INNER JOIN #__virtuemart_product_categories as cat ON (pc.virtuemart_product_id=
 								$v = $this->productModel->searchcustoms[$selected->virtuemart_custom_id];
 							}
 							//$v = $app->getUserStateFromRequest ('com_virtuemart.customfields.'.$selected->virtuemart_custom_id, 'customfields['.$selected->virtuemart_custom_id.']', '', 'string');
-							$this->searchCustomValues .= '<div class="vm-search-custom-values-group"><div class="vm-custom-title-select">' .  vmText::_( $selected->custom_title ).'</div>'.JHtml::_( 'select.genericlist', $valueOptions, 'customfields['.$selected->virtuemart_custom_id.']', 'class="inputbox vm-chzn-select changeSendForm"', 'virtuemart_custom_id', 'custom_title', $v ) . '</div>';
+
+                            // Custom Search Values
+                            $selected->value_options    = $valueOptions;
+                            $selected->v                = $v;
+                            $this->searchCustomValues[] = $selected;
 						}
 
 						//vmdebug('getSearchCustom '.$q2,$Opts,$valueOptions);
@@ -621,9 +625,7 @@ INNER JOIN #__virtuemart_product_categories as cat ON (pc.virtuemart_product_id=
 						}*/
 
 				} else if($selected->field_type=="P"){
-					$v = vRequest::getString('customfields['.$selected->virtuemart_custom_id.']');
-					$n = 'customfields['.$selected->virtuemart_custom_id.']';
-					$this->searchCustomValues .= vmText::_( $selected->custom_title ).' <input name="'.$n.'" class="inputbox vm-chzn-select" type="text" size="20" value="'.$v.'"/>';
+                    $this->searchCustomValues[] = $selected;
 				} else {
 				//Atm not written for other field types
 				/*	$db->setQuery('SELECT `customfield_value` as virtuemart_custom_id,`custom_value` as custom_title FROM `#__virtuemart_product_customfields` WHERE virtuemart_custom_id='.$selected->virtuemart_custom_id);
@@ -634,7 +636,6 @@ INNER JOIN #__virtuemart_product_categories as cat ON (pc.virtuemart_product_id=
 
 				}
 			}
-			$this->searchCustomValues .= '<div class="clear"></div>';
 		}
 
 		if(VmConfig::get('useCustomSearchTrigger',false)){
@@ -665,15 +666,24 @@ INNER JOIN #__virtuemart_product_categories as cat ON (pc.virtuemart_product_id=
 			if (!$last_category_id or $this->categoryId == $last_category_id) {
 				$last_category_id = vRequest::getInt('virtuemart_category_id', false);
 			}
-			if ($last_category_id and $this->categoryId != $last_category_id) {
+			/*if ($last_category_id and $this->categoryId != $last_category_id) {
 				$catLink = '&view=category&virtuemart_category_id=' . $last_category_id;
-			}
+			}*/
 		}
 
 		if ((int)VmConfig::get('handle_404',1)) {
-			$this->app->redirect(JRoute::_('index.php?option=com_virtuemart' . $catLink . '&error=404', FALSE));
+
+			header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
+
+			$cat = VmModel::getModel('category')->getCategory($last_category_id);
+			if(empty($cat->virtuemart_category_id)){
+				$last_category_id = 0;
+			}
+			vRequest::setVar('virtuemart_category_id', $last_category_id);
+			$this->display();
+			//$this->app->redirect(JRoute::_('index.php?option=com_virtuemart' . $catLink . '&error=404', FALSE));
 		} else {
-			JError::raise(E_ERROR,'404','Not found');
+			throw new RuntimeException('VirtueMart category not found.', 404);
 		}
 
 		return;

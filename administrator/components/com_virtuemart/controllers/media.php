@@ -13,7 +13,7 @@
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: media.php 9831 2018-05-07 13:45:33Z Milbo $
+* @version $Id: media.php 9888 2018-06-21 07:22:10Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -55,7 +55,6 @@ class VirtuemartControllerMedia extends VmController {
 		//Now we try to determine to which this media should be long to
 		$data = array_merge(vRequest::getRequest(),vRequest::get('media'));
 
-		//$data['file_title'] = vRequest::getVar('file_title','','post','STRING',JREQUEST_ALLOWHTML);
 		if(!empty($data['file_description'])){
 			$data['file_description'] = JComponentHelper::filterText($data['file_description']); //vRequest::filter(); vRequest::getHtml('file_description','');
 		}
@@ -88,7 +87,7 @@ class VirtuemartControllerMedia extends VmController {
 
 			$configPaths = array('assets_general_path','media_category_path','media_product_path','media_manufacturer_path','media_vendor_path');
 			foreach($configPaths as $path){
-				$this -> renameFileExtension(VMPATH_ROOT.DS.VmConfig::get($path) );
+				$this -> renameFileExtension(VMPATH_ROOT .'/'. VmConfig::get($path) );
 			}
 
 			$migrator = new Migrator();
@@ -105,6 +104,7 @@ class VirtuemartControllerMedia extends VmController {
 	function renameFileExtension($path){
 
 		$results = array();
+		$path = vRequest::filterPath($path);
 		$handler = opendir($path);
 
 		// open directory and walk through the filenames

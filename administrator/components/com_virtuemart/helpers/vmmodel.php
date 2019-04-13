@@ -396,7 +396,7 @@ class VmModel extends vObject{
 			return $table;
 		}
 
-		JError::raiseError(0, vmText::sprintf('JLIB_APPLICATION_ERROR_TABLE_NAME_NOT_SUPPORTED', $name));
+		vmError(vmText::sprintf('JLIB_APPLICATION_ERROR_TABLE_NAME_NOT_SUPPORTED', $name),vmText::sprintf('JLIB_APPLICATION_ERROR_TABLE_NAME_NOT_SUPPORTED', $name));
 
 		return null;
 	}
@@ -837,9 +837,9 @@ class VmModel extends vObject{
 		}
 
 		if($this->_withCount){
-			$q = 'SELECT SQL_CALC_FOUND_ROWS '.$select.$joinedTables;
+			$q = 'SELECT SQL_CALC_FOUND_ROWS '.$select.' '.$joinedTables;
 		} else {
-			$q = 'SELECT '.$select.$joinedTables;
+			$q = 'SELECT '.$select.' '.$joinedTables;
 		}
 
 		if($this->_noLimit or empty($limit)){

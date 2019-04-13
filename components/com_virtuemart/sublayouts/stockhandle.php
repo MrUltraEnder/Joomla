@@ -1,4 +1,6 @@
 <?php
+defined ('_JEXEC') or die();
+
 $product = $viewData['product'];
 // Availability
 $stockhandle = VmConfig::get('stockhandle_products', false) && $product->product_stockhandle ? $product->product_stockhandle : VmConfig::get('stockhandle','none');

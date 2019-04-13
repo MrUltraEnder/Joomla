@@ -12,7 +12,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: default_checkout.php 9653 2017-10-18 12:59:33Z Milbo $
+ * @version $Id: default_checkout.php 9821 2018-04-16 18:04:39Z Milbo $
  */
 defined('_JEXEC') or die('Restricted access');
 

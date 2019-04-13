@@ -13,7 +13,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: product_edit_customer.php 9831 2018-05-07 13:45:33Z Milbo $
+ * @version $Id: product_edit_customer.php 9953 2018-10-01 12:04:43Z Milbo $
  */
 // Check to ensure this file is included in Joomla!
 defined ('_JEXEC') or die('Restricted access');
@@ -69,7 +69,7 @@ $i = 0;
 		<td width="21%" valign="top">
 			<div id="customer-mail-content">
 				<div><?php echo vmText::_ ('COM_VIRTUEMART_PRODUCT_EMAIL_SUBJECT') ?></div>
-				<input type="text" class="mail-subject" id="mail-subject" size="100"   value="<?php echo vmText::sprintf ('COM_VIRTUEMART_PRODUCT_EMAIL_SHOPPERS_SUBJECT',htmlentities($this->product->product_name)) ?>">
+				<input type="text" class="mail-subject" id="mail-subject" size="100"   value="<?php echo vmText::sprintf ('COM_VIRTUEMART_PRODUCT_EMAIL_SHOPPERS_SUBJECT',$this->product->product_name) ?>">
 
 				<div><?php echo vmText::_ ('COM_VIRTUEMART_PRODUCT_EMAIL_CONTENT') ?></div>
 				<textarea style="width: 100%;" class="inputbox"   id="mail-body" cols="35" rows="10"></textarea>
@@ -86,7 +86,7 @@ $i = 0;
 				</span><br/>
 				<?php echo $this->lists['OrderStatus'];?>
 				<br/> <br/>
-				<div style="font-weight:bold;"><?php echo vmText::sprintf ('COM_VIRTUEMART_PRODUCT_SHOPPERS_LIST', vRequest::vmSpecialChars($this->product->product_name)); ?></div>
+				<div style="font-weight:bold;"><?php echo vmText::sprintf ('COM_VIRTUEMART_PRODUCT_SHOPPERS_LIST', $this->product->product_name); ?></div>
 				<table class="adminlist table ui-sortable" cellspacing="0" cellpadding="0">
 					<thead>
 					<tr>

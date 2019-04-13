@@ -13,7 +13,7 @@
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: edit.php 9413 2017-01-04 17:20:58Z Milbo $
+* @version $Id: edit.php 9901 2018-07-23 13:36:52Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -32,6 +32,7 @@ AdminUIHelper::imitateTabs('start','COM_VIRTUEMART_CURRENCY_DETAILS');
 	<table class="admintable">
 		<?php echo VmHTML::row('input','COM_VIRTUEMART_CURRENCY_NAME','currency_name',vRequest::vmSpecialChars($this->currency->currency_name),'class="required"'); ?>
 		<?php echo VmHTML::row('booleanlist','COM_VIRTUEMART_PUBLISHED','published',$this->currency->published); ?>
+		<?php if($this->showVendors()){ echo VmHTML::row('checkbox','COM_VIRTUEMART_SHARED','shared',$this->currency->shared); } ?>
 		<?php echo VmHTML::row('input','COM_VIRTUEMART_CURRENCY_EXCHANGE_RATE','currency_exchange_rate',$this->currency->currency_exchange_rate,'class="inputbox"','',6); ?>
 		<?php echo VmHTML::row('input','COM_VIRTUEMART_CURRENCY_CODE_2','currency_code_2',$this->currency->currency_code_2,'class="inputbox"','',2,2); ?>
 		<?php echo VmHTML::row('input','COM_VIRTUEMART_CURRENCY_CODE_3','currency_code_3',$this->currency->currency_code_3,'class="required"','',3,3); ?>

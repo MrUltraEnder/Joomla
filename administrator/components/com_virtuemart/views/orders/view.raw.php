@@ -12,7 +12,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: view.raw.php 9831 2018-05-07 13:45:33Z Milbo $
+ * @version $Id: view.raw.php 9881 2018-06-20 09:03:58Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -108,7 +108,6 @@ class VirtuemartViewOrders extends VmViewAdmin {
 		$this->assignRef('orderst', $orderst);
 		$this->assignRef('virtuemart_shipmentmethod_id', $orderbt->virtuemart_shipmentmethod_id);
 
-		error_reporting(0);
 		parent::display($tpl);
 	}
 

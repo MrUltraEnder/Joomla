@@ -3,7 +3,7 @@ defined('_JEXEC') or die('Restricted access');
 
 /**
  * @author Valérie Isaksen
- * @version $Id: sofort.php 9667 2017-11-15 11:17:36Z Milbo $
+ * @version $Id: sofort.php 9821 2018-04-16 18:04:39Z Milbo $
  * @package VirtueMart
  * @subpackage payment
  * @copyright Copyright (C) 2004-Copyright (C) 2004 - 2018 Virtuemart Team. All rights reserved.   - All rights reserved.
@@ -21,7 +21,7 @@ if (!class_exists('vmPSPlugin')) {
 }
 
 class plgVmPaymentSofort extends vmPSPlugin {
-	const RELEASE = 'VM 3.2.15';
+	const RELEASE = 'VM 3.4.2';
 	const SU_SOFORTBANKING = 'su';
 
 

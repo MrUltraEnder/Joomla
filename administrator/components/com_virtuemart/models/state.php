@@ -13,7 +13,7 @@
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: state.php 9863 2018-06-07 07:32:06Z Milbo $
+* @version $Id: state.php 9885 2018-06-20 12:35:43Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -103,17 +103,22 @@ class VirtueMartModelState extends VmModel {
 			$q = 'SELECT * FROM `#__virtuemart_states`  WHERE `virtuemart_country_id`= "'.$countryId.'" AND `published`="1"';
 			$db->setQuery($q);
 			if($db->loadResult()){
-				//Test if virtuemart_state_id fits to virtuemart_country_id
-				$q = 'SELECT * FROM `#__virtuemart_states` WHERE `virtuemart_country_id`= "'.$countryId.'" AND `virtuemart_state_id`="'.$stateId.'" and `published`="1"';
-				$db->setQuery($q);
-				if($db->loadResult()){
-					return true;
-				} else {
-					//There is a country, but the state does not exist or is unlisted
-					$stateId = 0;
-					vmInfo('COM_VIRTUEMART_COUNTRY_STATE_NOTEXIST');
-					return false;
+
+				if(!empty($stateId)){
+					//Test if virtuemart_state_id fits to virtuemart_country_id
+					$q = 'SELECT * FROM `#__virtuemart_states` WHERE `virtuemart_country_id`= "'.$countryId.'" AND `virtuemart_state_id`="'.$stateId.'" and `published`="1"';
+					$db->setQuery($q);
+					if($db->loadResult()){
+						return true;
+					} else {
+						//There is a country, but the state does not exist or is unlisted
+						$stateId = 0;
+						vmLanguage::loadJLang('com_virtuemart_countries');
+						vmInfo('COM_VIRTUEMART_COUNTRY_STATE_NOTEXIST');
+						return false;
+					}
 				}
+
 			} else {
 				//This country has no states listed
 				$stateId = 0;
@@ -125,7 +130,7 @@ class VirtueMartModelState extends VmModel {
 			//The given country does not exist, this can happen, when non published country was chosen
 			$countryId = 0;
 			$stateId = 0;
-			//$required = false;
+			vmLanguage::loadJLang('com_virtuemart_countries');
 			vmInfo('COM_VIRTUEMART_COUNTRY_NOTEXIST');
 			return false;
 		}

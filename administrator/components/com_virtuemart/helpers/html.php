@@ -7,7 +7,8 @@
  * @package	VirtueMart
  * @subpackage Helpers
  * @author RickG
- * @copyright Copyright (c) 2004-2008 Soeren Eberhardt-Biermann, 2009 VirtueMart Team. All rights reserved.
+ * @copyright Copyright (c) 2004-2008 Soeren Eberhardt-Biermann, 2009 - 2018 VirtueMart Team. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL 2, see COPYRIGHT.php
  */
 
 // Check to ensure this file is included in Joomla!

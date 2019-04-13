@@ -1397,7 +1397,7 @@ class vmrouterHelper {
 				} else $this->menu['virtuemart'] = $homeid;
 			}
 		}
-		vmdebug('Router parse, using Itemid',$this->Itemid);
+		//vmdebug('Router parse, using Itemid',$this->Itemid);
 		$mCache[$h.$this->Itemid] = $this->menu;
 	}
 

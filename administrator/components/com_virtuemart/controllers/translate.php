@@ -103,7 +103,7 @@ class VirtuemartControllerTranslate extends VmController {
 		}
 
 		$lang = vRequest::getVar('lg');
-		$langs = VmConfig::get('active_languages',array(VmConfig::$jDefLang)) ;
+		$langs = VmConfig::get('active_languages',array(VmConfig::$jDefLangTag)) ;
 
 		if (!in_array($lang, $langs) ) {
 			$json['msg'] = 'Invalid language ! '.$lang;

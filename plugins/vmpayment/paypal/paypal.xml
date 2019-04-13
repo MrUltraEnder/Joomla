@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <extension version="2.5" type="plugin" group="vmpayment" method="upgrade">
     <name>PayPal</name>
-    <creationDate>June 14 2018</creationDate>
+    <creationDate>October 07 2018</creationDate>
     <author>VirtueMart Development Team</author>
     <authorUrl>https://virtuemart.net</authorUrl>
     <copyright>Copyright (C) 2004 - 2018 Virtuemart Team. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <version>3.2.15</version>
+    <version>3.4.2</version>
     <description>PayPal</description>
     <files>
         <filename plugin="paypal">paypal.php</filename>
@@ -341,6 +341,40 @@
                 <!-- ============ -->
                 <field type="vmtitle" default="VMPAYMENT_PAYPAL_LAYOUT_SECTION"
                        description="VMPAYMENT_PAYPAL_LAYOUT_SECTION_DESC"/>
+                <field class="explayout" name="enable_smart_buttons" type="checkbox" default="0" label="VMPAYMENT_PAYPAL_ENABLE_SMART_BUTTONS" description="VMPAYMENT_PAYPAL_ENABLE_SMART_BUTTONS_TIP" />
+                <field class="explayout" name="smbt_color" type="list" size="30" label="VMPAYMENT_PAYPAL_SMBT_COLOR"
+                       description="VMPAYMENT_PAYPAL_SMBT_COLOR_TIP" default="gold">
+                    <option value="gold">VMPAYMENT_PAYPAL_SMBT_COLOR_GOLD</option>
+                    <option value="blue">VMPAYMENT_PAYPAL_SMBT_COLOR_BLUE</option>
+                    <option value="silver">VMPAYMENT_PAYPAL_SMBT_COLOR_SILBER</option>
+                    <option value="black">VMPAYMENT_PAYPAL_SMBT_COLOR_BLACK</option>
+                </field>
+                <field class="explayout" name="smbt_layout" type="list" size="30" label="VMPAYMENT_PAYPAL_SMBT_LAYOUT"
+                       description="VMPAYMENT_PAYPAL_SMBT_LAYOUT_TIP" default="vertical">
+                    <option value="horizontal">VMPAYMENT_PAYPAL_SMBT_LAYOUT_HORIZONTAL</option>
+                    <option value="vertical">VMPAYMENT_PAYPAL_SMBT_LAYOUT_VERTICAL</option>
+                </field>
+                <field class="explayout" name="smbt_size" type="list" size="30" label="VMPAYMENT_PAYPAL_SMBT_SIZE"
+                       description="VMPAYMENT_PAYPAL_SMBT_SIZE_TIP" default="responsive">
+                    <option value="small">VMPAYMENT_PAYPAL_SMBT_SIZE_SMALL</option>
+                    <option value="medium">VMPAYMENT_PAYPAL_SMBT_SIZE_MEDIUM</option>
+                    <option value="large">VMPAYMENT_PAYPAL_SMBT_SIZE_LARGE</option>
+                    <option value="responsive">VMPAYMENT_PAYPAL_SMBT_SIZE_RESPONSIVE</option>
+                </field>
+                <field class="explayout" name="smbt_shape" type="list" size="30" label="VMPAYMENT_PAYPAL_SMBT_SHAPE"
+                       description="VMPAYMENT_PAYPAL_SMBT_SHAPE_TIP" default="rect">
+                    <option value="pill">VMPAYMENT_PAYPAL_SMBT_SHAPE_PILL</option>
+                    <option value="rect">VMPAYMENT_PAYPAL_SMBT_SHAPE_RECT</option>
+                </field>
+                <field class="explayout" name="smbt_label" type="list" size="30" label="VMPAYMENT_PAYPAL_SMBT_LABEL"
+                       description="VMPAYMENT_PAYPAL_SMBT_LABEL_TIP" default="checkout">
+                    <option value="checkout">VMPAYMENT_PAYPAL_SMBT_LABEL_CHECKOUT</option>
+                    <option value="credit">VMPAYMENT_PAYPAL_SMBT_LABEL_CREDIT</option>
+                    <option value="pay">VMPAYMENT_PAYPAL_SMBT_LABEL_PAY</option>
+                    <option value="buynow">VMPAYMENT_PAYPAL_SMBT_LABEL_BUYNOW</option>
+                    <option value="paypal">VMPAYMENT_PAYPAL_SMBT_LABEL_PAYPAL</option>
+                    <option value="installment">VMPAYMENT_PAYPAL_SMBT_LABEL_INSTALLMENT</option>
+                </field>
                 <field class="explayout" type="note" label="VMPAYMENT_PAYPAL_LOGOS_EXPRESS" description="VMPAYMENT_PAYPAL_LOGOS_EXPRESS_TIP">
                 </field>
                 <field name="payment_logos" type="vmfiles" multiple="true" scope="com_virtuemart" label="VMPAYMENT_PAYPAL_LOGOS"

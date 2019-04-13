@@ -3,7 +3,7 @@ if( !defined( '_JEXEC' ) ) die( 'Direct Access to '.basename(__FILE__).' is not 
 /**
 * ECB Currency Converter Module
 *
-* @version $Id: convertECB.php 9874 2018-06-13 17:56:12Z Milbo $
+* @version $Id: convertECB.php 9925 2018-09-09 09:20:59Z Milbo $
 * @package VirtueMart
 * @subpackage classes
 * @copyright Copyright (C) 2004-2008 soeren - All rights reserved.
@@ -23,9 +23,9 @@ if( !defined( '_JEXEC' ) ) die( 'Direct Access to '.basename(__FILE__).' is not 
  */
 class convertECB {
 
-	var $document_address = 'http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';
+	var $document_address = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';
 
-	var $info_address = 'http://www.ecb.int/stats/eurofxref/';
+	var $info_address = 'https://www.ecb.int/stats/eurofxref/';
 	var $supplier = 'European Central Bank';
 
 	/**
@@ -114,11 +114,9 @@ class convertECB {
 				$archive = false;
 				vmError( "The file $archivefile_name can't be created. The directory $store_path is not writable" );
 			}
-			//			JError::raiseNotice(1, "The file $archivefile_name should be in the directory $store_path " );
+
 			if( $curr_filename == $ecb_filename ) {
 				// Fetch the file from the internet
-
-				//				JError::raiseNotice(1, "Updating currency " );
 				if (!$contents = VmConnector::handleCommunication( $curr_filename )) {
 					if (isset($file_datestamp)) {
 						$contents = @file_get_contents( $curr_filename );

@@ -382,10 +382,7 @@ class VirtueMartModelCustom extends VmModel {
 		}
 
 		$table->field_type = $data['field_type'];
-		if($table->field_type == 'C'){
-			//vmInfo();
-			//$data['is_cart_attribute'] = 1;
-		}
+
 		$table->custom_element = $data['custom_element'];
 		$table->custom_jplugin_id = $data['custom_jplugin_id'];
 		$table->_xParams = 'custom_params';
@@ -396,18 +393,53 @@ class VirtueMartModelCustom extends VmModel {
 
 		//We are in the custom and so the table contains the field_type, else not!!
 		self::setParameterableByFieldType($table,$table->field_type);
+
 		if(empty($data['virtuemart_custom_id']) and !vmAccess::manager('custom.create')){
 			vmWarn('Insufficient permission to create custom');
 			return false;
 		}
+
+		if($table->field_type == 'S' and !empty($data['transform'])){
+			$this->transformSetStringsList($data);
+			$data['custom_value'] = $data['transform'];
+		}
+		$data['transform'] = '';
+
 		$table->bindChecknStore($data);
 
-		JPluginHelper::importPlugin('vmcustom');
-		$dispatcher = JDispatcher::getInstance();
-		$error = $dispatcher->trigger('plgVmOnStoreInstallPluginTable', array('custom' , $data, $table));
+		if($table->field_type == 'E'){
+			JPluginHelper::importPlugin('vmcustom');
+			$dispatcher = JDispatcher::getInstance();
+			$error = $dispatcher->trigger('plgVmOnStoreInstallPluginTable', array('custom' , $data, $table));
+		}
 
 		return $table->virtuemart_custom_id ;
 
+	}
+
+	public function transformSetStringsList($data){
+
+		$current = explode(';',trim($data['custom_value']));
+		$goal = explode(';',trim($data['transform']));
+
+		$db = JFactory::getDbo();
+		foreach($current as $k=>$v){
+
+			if(isset($goal[$k])){
+				$newVal = $goal[$k];
+			}
+			if($v!=$newVal){
+				$q = 'UPDATE #__virtuemart_product_customfields SET customfield_value = "'.$newVal.'" WHERE virtuemart_custom_id = "'.(int)$data['virtuemart_custom_id'].'" and customfield_value="'.$v.'" ';
+				$db->setQuery($q);
+				$res = $db->execute();
+				if($res){
+
+				}
+			}
+
+		}
+
+		return true;
 	}
 
 	/**
@@ -481,7 +513,8 @@ class VirtueMartModelCustom extends VmModel {
 			$varsToPush = array(
 				'addEmpty'		=> array(0, 'int'),
 				'selectType'	=> array(0, 'int'),
-				'multiplyPrice'	=> array('', 'string')
+				'multiplyPrice'	=> array('', 'string'),
+				'transform'	=> array('', 'area')
 			);
 		} else if($type=='M'){
 			$varsToPush = array(

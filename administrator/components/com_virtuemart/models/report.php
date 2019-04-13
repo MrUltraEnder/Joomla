@@ -1,14 +1,12 @@
 <?php
-if (!defined ('_JEXEC')) {
-	die('Direct Access to ' . basename (__FILE__) . ' is not allowed.');
-}
+defined('_JEXEC') or die('Restricted access');
 
 /**
  *
  * Report Model
  *
  * @author Max Milbers, Wicksj
- * @version $Id: report.php 9831 2018-05-07 13:45:33Z Milbo $
+ * @version $Id: report.php 9880 2018-06-19 14:36:18Z Milbo $
  * @package VirtueMart
  * @subpackage Report
  * @copyright Copyright (C) 2011 - 2014VirtueMart Team - All rights reserved.

@@ -13,7 +13,7 @@
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: paymentmethod.php 9831 2018-05-07 13:45:33Z Milbo $
+* @version $Id: paymentmethod.php 9880 2018-06-19 14:36:18Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -254,7 +254,7 @@ class VirtueMartModelPaymentmethod extends VmModel{
 		$payment->virtuemart_paymentmethod_id = 0;
 		$payment->payment_name = $payment->payment_name.' Copy';
 		if (!$clone = $this->store($payment)) {
-			JError::raiseError(500, 'createClone '. $payment->getError() );
+			vmError('createClone '. $payment->getError(),'createClone '. $payment->getError() );
 		}
 		return $clone;
 	}

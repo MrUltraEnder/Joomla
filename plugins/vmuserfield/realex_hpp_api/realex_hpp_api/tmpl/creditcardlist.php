@@ -4,7 +4,7 @@
  * Realex User Field plugin
  *
  * @author Valerie Isaksen
- * @version $Id: creditcardlist.php 9294 2016-09-21 09:56:21Z Milbo $
+ * @version $Id: creditcardlist.php 9821 2018-04-16 18:04:39Z Milbo $
  * @package VirtueMart
  * @subpackage userfield
  * Copyright (C) 2004 - 2018 Virtuemart Team. All rights reserved.

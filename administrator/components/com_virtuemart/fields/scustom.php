@@ -1,8 +1,13 @@
 <?php
 defined('JPATH_BASE') or die;
 
+/**
+ * @author Max Milbers
+ * @copyright Copyright (C) VirtueMart Team - All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL 2, see COPYRIGHT.php
+ */
 jimport('joomla.form.formfield');
-if (!class_exists( 'VmConfig' )) require(JPATH_ROOT .'/administrator/components/com_virtuemart/helpers/config.php');
+
 
 /**
  * Creates dropdown for selecting a string customfield
@@ -12,6 +17,7 @@ class JFormFieldScustom extends JFormField {
 	var $type = 'scustom';
 
 	function getInput() {
+		if (!class_exists( 'VmConfig' )) require(JPATH_ROOT .'/administrator/components/com_virtuemart/helpers/config.php');
 		VmConfig::loadConfig();
 		return JHtml::_('select.genericlist',  $this->_getStringCustoms(), $this->name, 'class="inputbox"   ', 'value', 'text', $this->value, $this->id);
 	}

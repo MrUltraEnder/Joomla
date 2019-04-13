@@ -1,9 +1,10 @@
 <?php
-
-
-defined('JPATH_BASE') or die;
-
-if (!class_exists( 'VmConfig' )) require(JPATH_ROOT .'/administrator/components/com_virtuemart/helpers/config.php');
+defined ('_JEXEC') or die();
+/**
+ * @author Max Milbers
+ * @copyright Copyright (C) VirtueMart Team - All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL 2, see COPYRIGHT.php
+ */
 
 
 /**
@@ -31,7 +32,7 @@ class JFormFieldProduct extends JFormField
 
 
 	function getInput() {
-
+		if (!class_exists( 'VmConfig' )) require(JPATH_ROOT .'/administrator/components/com_virtuemart/helpers/config.php');
 		$key = ($this->element['key_field'] ? $this->element['key_field'] : 'value');
 		$val = ($this->element['value_field'] ? $this->element['value_field'] : $this->name);
 		VmConfig::loadConfig();

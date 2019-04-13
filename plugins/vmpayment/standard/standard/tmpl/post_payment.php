@@ -33,15 +33,9 @@ defined ('_JEXEC') or die();
 	<?php echo  $viewData['displayTotalInPaymentCurrency']; ?>
 </div>
 <?php
-$tracking = VmConfig::get('ordertracking','guests');
-if($tracking !='none' and !($tracking =='registered' and empty($viewData["virtuemart_user_id"]) )){
-
-$orderlink = 'index.php?option=com_virtuemart&view=orders&layout=details&order_number='.$viewData["order_number"];
-if( $tracking == 'guestlink' or ( $tracking == 'guests' and empty($viewData["virtuemart_user_id"]))){
-	$orderlink .= '&order_pass='.$viewData["order_pass"];
-}
+if($viewData["orderlink"]){
 ?>
-<a class="vm-button-correct" href="<?php echo JRoute::_($orderlink, false)?>"><?php echo vmText::_('COM_VIRTUEMART_ORDER_VIEW_ORDER'); ?></a>
+<a class="vm-button-correct" href="<?php echo JRoute::_($viewData["orderlink"], false)?>"><?php echo vmText::_('COM_VIRTUEMART_ORDER_VIEW_ORDER'); ?></a>
 <?php
 }
 ?>

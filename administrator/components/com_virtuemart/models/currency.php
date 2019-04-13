@@ -14,7 +14,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: currency.php 9863 2018-06-07 07:32:06Z Milbo $
+ * @version $Id: currency.php 9965 2018-10-06 19:55:37Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -37,6 +37,7 @@ class VirtueMartModelCurrency extends VmModel {
 	function __construct() {
 		parent::__construct();
 		$this->setMainTable('currencies');
+		$this->setToggleName('shared');
 	}
 
 	/**
@@ -107,7 +108,7 @@ class VirtueMartModelCurrency extends VmModel {
 				$vendor_currency['vendor_accepted_currencies'] = $vendor_currency['vendor_currency'];
 				vmWarn('No accepted currencies defined');
 				if(empty($vendor_currency['vendor_accepted_currencies'])) {
-					$link = 'index.php?option=com_virtuemart&view=user&task=editshop';
+					$link = JURI::root(false).'administrator/index.php?option=com_virtuemart&view=user&task=editshop';
 					vmWarn(vmText::sprintf('COM_VIRTUEMART_CONF_WARN_NO_CURRENCY_DEFINED','<a href="'.$link.'">'.$link.'</a>'));
 					$currencies[$vendorId] = false;
 					return $currencies[$vendorId];

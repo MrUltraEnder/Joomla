@@ -50,7 +50,7 @@ foreach ($this->cart->products as $pkey => $prow) {
 	$prow->prices = array_merge($prow->prices,$this->cart->cartPrices[$pkey]);
 ?>
 
-<tr style="vertical-align: top" class="sectiontableentry<?php echo $i ?>">
+<tr style="vertical-align: top" class="sectiontableentry<?php echo $i; if(!empty($prow->class)) echo ' '.$prow->class ?>">
 	<td class="vm-cart-item-name" >
 		<input type="hidden" name="cartpos[]" value="<?php echo $pkey ?>">
 		<?php if ($prow->virtuemart_media_id) { ?>

@@ -15,7 +15,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: user.php 9863 2018-06-07 07:32:06Z Milbo $
+ * @version $Id: user.php 9966 2018-10-07 13:29:27Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -152,6 +152,23 @@ class VirtueMartModelUser extends VmModel {
 			$xrefTable = $this->getTable('vmuser_shoppergroups');
 			$this->_data->shopper_groups = $xrefTable->load($this->_id);
 		}
+
+
+//		quorvia - also get shoppergroups for the admin when acting as a user as that can have shoppergroup ids that may impact options
+		if (VmConfig::get('ChangeShopperAlsoUseAdminShoppergroups', 0)){
+			$adminId = vmAccess::getBgManagerId();
+			if (!empty($adminId) && $this->_id != $adminId){
+				$xrefTable            = $this->getTable('vmuser_shoppergroups');
+				$admin_shopper_groups = $xrefTable->load($adminId);
+				if (!empty ($admin_shopper_groups)){
+					$this->_data->shopper_groups = array_merge($this->_data->shopper_groups, $admin_shopper_groups);
+				}
+			}
+		}
+//quorvia end
+
+
+
 		if(empty($this->_data->shopper_groups)) $this->_data->shopper_groups = array();
 
 		$site = JFactory::getApplication ()->isSite ();
@@ -264,7 +281,7 @@ class VirtueMartModelUser extends VmModel {
 				$ven = $vM->getVendor($vendorId);
 				if($ven->max_customers){
 					$this->setGetCount (true);
-					parent::exeSortSearchListQuery(2,'virtuemart_user_id',' FROM #__virtuemart_vendor_users',' WHERE ( `virtuemart_vendor_id` = "'.$vendorId.'" ) ');
+					parent::exeSortSearchListQuery(2,'virtuemart_user_id',' FROM #__virtuemart_vendor_users as vu LEFT JOIN `#__users` as ju ON vu.virtuemart_user_id = ju.id',' WHERE ( `virtuemart_vendor_id` = "'.$vendorId.'" AND ju.`block` = 0) ');
 					$this->setGetCount (false);
 					if($ven->max_customers<($this->_total+1)){
 						vmWarn('You are not allowed to register more than '.$ven->max_customers.' users');
@@ -463,9 +480,11 @@ class VirtueMartModelUser extends VmModel {
 
 				//$doVendor = (boolean) $usersConfig->get('mail_to_admin', true);
 
-				$this->sendRegistrationEmail($user,$password, $doUserActivation);
-				if ($doUserActivation ) {
+				$this->sendRegistrationEmail($user,$password, $useractivation);
+				if ($useractivation == '1' ) {
 					vmInfo('COM_VIRTUEMART_REG_COMPLETE_ACTIVATE');
+				} else if ($useractivation == '2' ){
+					vmInfo('COM_VIRTUEMART_REG_COMPLETE_ACTIVATE_ADMIN');
 				} else {
 					vmInfo('COM_VIRTUEMART_REG_COMPLETE');
 					$user->set('activation', '' );
@@ -795,8 +814,6 @@ class VirtueMartModelUser extends VmModel {
 	*/
 	public function validateUserData(&$data,$type='BT',$showInfo = false) {
 
-		if(empty($data)) return -1;
-
 		$userFieldsModel = VmModel::getModel('userfields');
 
 		if ($type == 'BT') {
@@ -827,15 +844,13 @@ class VirtueMartModelUser extends VmModel {
 
 				if($untested){
 					$untested = false;
-					if(!empty($data['virtuemart_country_id'])){
-						if(!isset($data['virtuemart_state_id'])) $data['virtuemart_state_id'] = 0;
+					if(isset($data['virtuemart_country_id']) and isset($data['virtuemart_state_id']) ){
+						$msg = VirtueMartModelState::testStateCountry($data['virtuemart_country_id'], $data['virtuemart_state_id'], $staterequired);
 					}
-					$msg = VirtueMartModelState::testStateCountry($data['virtuemart_country_id'], $data['virtuemart_state_id'], $staterequired);
+
+
 				}
 
-				/*if ($field->name == 'virtuemart_country_id'){
-					$field->required = $msg;
-				}*/
 				if ($field->name == 'virtuemart_state_id' and $field->required){
 					$field->required = $staterequired;
 				}
@@ -1100,7 +1115,7 @@ class VirtueMartModelUser extends VmModel {
 	 * @author Christopher Roussel
 	 * @author Valérie Isaksen
 	 */
-	private function sendRegistrationEmail($user, $password, $doUserActivation){
+	private function sendRegistrationEmail($user, $password, $useractivation){
 
 		$vars = array('user' => $user);
 
@@ -1108,11 +1123,9 @@ class VirtueMartModelUser extends VmModel {
 		$password = preg_replace('/[\x00-\x1F\x7F]/', '', $password); //Disallow control chars in the email
 		$vars['password'] = $password;
 
-		if ($doUserActivation) {
+		if ($useractivation == '1' or $useractivation == '2') {
 			jimport('joomla.user.helper');
-			$activationLink = 'index.php?option=com_users&task=registration.activate&token='.$user->get('activation');
-
-			$vars['activationLink'] = $activationLink;
+			$vars['activationLink'] = 'index.php?option=com_users&task=registration.activate&token='.$user->get('activation');
 		}
 
 		$usersConfig = JComponentHelper::getParams( 'com_users' );

@@ -260,7 +260,7 @@ if(class_exists('TCPDF')){
 			}
 			$header_x = (($this->getRTL())?($this->original_rMargin):($this->original_lMargin));
 			$cw = $this->w - $this->original_lMargin - $this->original_rMargin;
-			if (($headerdata['logo']) AND ($headerdata['logo'] != K_BLANK_IMAGE)) {
+			if (($headerdata['logo']) and ($headerdata['logo'] != K_BLANK_IMAGE)) {
 
 				if($this->tcpdf6){
 					if (!class_exists ('TCPDF_IMAGES')) {
@@ -272,7 +272,7 @@ if(class_exists('TCPDF')){
 					$imgtype = $this->getImageFileType(VMPATH_ROOT.DS.$headerdata['logo']);
 				}
 
-				if (($imgtype == 'eps') OR ($imgtype == 'ai')) {
+				if (($imgtype == 'eps') or ($imgtype == 'ai')) {
 					$this->ImageEps(VMPATH_ROOT.DS.$headerdata['logo'], '', '', $headerdata['logo_width']);
 				} elseif ($imgtype == 'svg') {
 					$this->ImageSVG(VMPATH_ROOT.DS.$headerdata['logo'], '', '', $headerdata['logo_width']);
@@ -316,7 +316,7 @@ if(class_exists('TCPDF')){
 		// print header template
 		$x = 0;
 		$dx = 0;
-		if (!$this->header_xobj_autoreset AND $this->booklet AND (($this->page % 2) == 0)) {
+		if (!$this->header_xobj_autoreset AND $this->booklet and (($this->page % 2) == 0)) {
 			// adjust margins for booklet mode
 			$dx = ($this->original_lMargin - $this->original_rMargin);
 		}

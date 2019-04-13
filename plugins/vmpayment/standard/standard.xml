@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <extension version="2.5" type="plugin" group="vmpayment" method="upgrade">
     <name>Standard</name>
-    <creationDate>June 14 2018</creationDate>
+    <creationDate>October 07 2018</creationDate>
     <author>The VirtueMart Development Team</author>
     <authorUrl>https://virtuemart.net</authorUrl>
     <copyright>Copyright (C) 2004 - 2018 Virtuemart Team. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <version>3.2.15</version>
+    <version>3.4.2</version>
     <description>Standard payment plugin</description>
 
     <files>
@@ -17,7 +17,8 @@
     <vmconfig>
         <fields name="params">
             <fieldset name="payment"  addfieldpath="/administrator/components/com_virtuemart/fields">
-
+                <field name="cryptit" type="text" label="Encrypt that"
+                       description="VMPAYMENT_STANDARD_MIN_AMOUNT_TIP"/>
                 <field name="payment_currency" type="vmacceptedcurrency" default="" label="VMPAYMENT_STANDARD_CURRENCY"
                        description="VMPAYMENT_STANDARD_CURRENCY_TIP"/>
                 <field name="status_pending" type="vmorderstate" scope="com_virtuemart" default="U"

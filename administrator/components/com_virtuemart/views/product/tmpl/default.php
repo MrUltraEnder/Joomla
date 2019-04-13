@@ -126,7 +126,7 @@ if($this->pagination->limit<=$mediaLimit or $totalList<=$mediaLimit){
 				if(empty($product->product_name)){
 					$product->product_name = vmText::sprintf('COM_VM_TRANSLATION_MISSING','virtuemart_product_id',$product->virtuemart_product_id);
 				}
-				echo JHtml::_('link', JRoute::_($link), $product->product_name, array('title' => vmText::_('COM_VIRTUEMART_EDIT').' '. htmlentities($product->product_name))); ?>
+				echo JHtml::_('link', JRoute::_($link), $product->product_name, array('title' => vmText::_('COM_VIRTUEMART_EDIT').' '. vRequest::vmHtmlEntities($product->product_name))); ?>
 					<!-- </span>  -->
 				</td>
 
@@ -159,7 +159,7 @@ if($this->pagination->limit<=$mediaLimit or $totalList<=$mediaLimit){
 						//echo JHtml::_('link', $link, '<span class="icon-nofloat vmicon vmicon-16-media"></span> ('.$product->mediaitems.')', array('title' => vmText::_('COM_VIRTUEMART_MEDIA_MANAGER').' '.$product->product_name) );
 						$img = '<span class="icon-nofloat vmicon vmicon-16-media"></span> ('.$product->mediaitems.')';
 					}
-					echo JHtml::_('link', $link, $img,  array('title' => vmText::_('COM_VIRTUEMART_MEDIA_MANAGER').' '.htmlentities($product->product_name)));
+					echo JHtml::_('link', $link, $img,  array('title' => vmText::_('COM_VIRTUEMART_MEDIA_MANAGER').' '.vRequest::vmHtmlEntities($product->product_name)));
 					?>
 					</td>
 				<!-- Product SKU -->

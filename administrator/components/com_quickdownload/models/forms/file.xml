@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="details"
+		addfieldpath="/administrator/components/com_quickdownload/models/fields">
+		
+		<field name="id" type="text" default="0" label="JGLOBAL_FIELD_ID_LABEL"
+			description="JGLOBAL_FIELD_ID_DESC" readonly="true" class="readonly" />
+			
+		<field name="title" type="text" label="COM_QUICKDOWNLOAD_FILES_NAME"
+			description="COM_QUICKDOWNLOAD_FILES_NAME" class="inputbox" required="true" size="30" />
+			
+		<field name="location" type="choosefile" label="COM_QUICKDOWNLOAD_FILES_LOCATION"
+			description="COM_QUICKDOWNLOAD_FILES_LOCATION" class="inputbox" size="30" fieldid="f_alias" />
+
+		<field name="external" type="text" label="COM_QUICKDOWNLOAD_FILES_EXTERNAL"
+			description="COM_QUICKDOWNLOAD_FILES_EXTERNAL_HELP" class="inputbox" size="60"  />
+			
+		<field name="category" type="qcategory" label="COM_QUICKDOWNLOAD_FILES_CATEGORY"
+			description="COM_QUICKDOWNLOAD_FILES_CATEGORY"  />
+
+		<field name="hits" type="text" label="COM_QUICKDOWNLOAD_FILES_HITS" default="0"
+			description="COM_QUICKDOWNLOAD_FILES_HITS" class="inputbox" required="true" size="22" />
+		
+		<field name="published" type="list" class="inputbox"
+			default="1" label="COM_QUICKDOWNLOAD_FILES_STATUS"
+			description="COM_QUICKDOWNLOAD_FILES_STATUS">
+			<option value="0">COM_QUICKDOWNLOAD_UNPUBLISHED
+			</option>
+			<option value="1">COM_QUICKDOWNLOAD_PUBLISHED
+			</option>
+
+		<field name="publish_up" type="calendar"
+			label="COM_QUICKDOWNLOAD_FILES_PUBLISH_UP" description="COM_QUICKDOWNLOAD_FILES_PUBLISH_UP"
+			class="inputbox" size="22" format="%Y-%m-%d %H:%M:%S" filter="user_utc"  />
+			
+		<field name="publish_down" type="calendar"
+			label="COM_QUICKDOWNLOAD_FILES_PUBLISH_DOWN" description="COM_QUICKDOWNLOAD_FILES_PUBLISH_DOWN"
+			class="inputbox" size="22" format="%Y-%m-%d %H:%M:%S" filter="user_utc" />
+
+		</field>
+	</fieldset>
+</form>

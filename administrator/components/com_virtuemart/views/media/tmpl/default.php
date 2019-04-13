@@ -1,4 +1,5 @@
 <?php
+defined ('_JEXEC') or die();
 /**
 *
 * Description
@@ -13,7 +14,7 @@
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: default.php 9591 2017-06-27 13:24:53Z Milbo $
+* @version $Id: default.php 9911 2018-08-22 09:14:05Z Milbo $
 */
 
 AdminUIHelper::startAdminArea($this);
@@ -32,9 +33,12 @@ $option = vRequest::getCmd('option');
 			 <td align="left" width="60%">
 				<?php echo $this->displayDefaultViewSearch('COM_VIRTUEMART_NAME','searchMedia') .' '. $this->lists['search_type'].' '. $this->lists['search_role']; ?>
 			 </td>
-			  <td align="left" style="width:20%;min-width:60px">
+			  <td align="left" style="width:10%;min-width:60px">
 				  <?php echo VmHtml::checkbox('missing','missing',1,0); echo '<span class="hasTip" title="'.vmText::_('COM_VM_MEDIA_MISSING_TIP').'" style="vertical-align:middle;padding:4px 0 0;">'.vmText::_('COM_VM_MEDIA_MISSING').'</span>'?>
 			  </td>
+              <td align="left" style="width:10%;min-width:60px">
+				  <?php echo VmHtml::checkbox('findUnusedMedias','findUnusedMedias',1,0); echo '<span class="hasTip" title="'.vmText::_('COM_VM_MEDIA_UNUSED_TIP').'" style="vertical-align:middle;padding:4px 0 0;">'.vmText::_('COM_VM_MEDIA_UNUSED').'</span>'?>
+              </td>
               <td>
 				  <?php echo $this->lists['vendors'] ?>
               </td>
@@ -73,10 +77,9 @@ $productfileslist = $this->files;
 			if($productfile->file_is_forSale){
 				$fullSizeFilenamePath = $productfile->file_url_folder.$productfile->file_name.'.'.$productfile->file_extension;
 			} else {
-				$rel_path = str_replace('/',DS,$productfile->file_url_folder);
-				$fullSizeFilenamePath = VMPATH_ROOT.DS.$rel_path.$productfile->file_name.'.'.$productfile->file_extension;
+				$fullSizeFilenamePath = VMPATH_ROOT.DS.$productfile->file_url_folder.$productfile->file_name.'.'.$productfile->file_extension;
 			}
-
+			$fullSizeFilenamePath = vRequest::filterPath($fullSizeFilenamePath);
 			if($onlyMissing){
 				if(file_exists($fullSizeFilenamePath)){
 					continue;
@@ -148,11 +151,12 @@ $productfileslist = $this->files;
 	</tr>
 	</tfoot>
 	</table>
+</div>
 <!-- Hidden Fields -->
 <?php if (vRequest::getInt('virtuemart_product_id', false)) { ?>
 	<input type="hidden" name="virtuemart_product_id" value="<?php echo vRequest::getInt('virtuemart_product_id',0); ?>" />
 <?php } ?>
 	<?php echo $this->addStandardHiddenToForm(); ?>
 </form>
-</div>
+
 <?php AdminUIHelper::endAdminArea(); ?>

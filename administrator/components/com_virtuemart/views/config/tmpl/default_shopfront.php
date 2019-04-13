@@ -13,7 +13,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: default_shopfront.php 9694 2017-12-06 17:41:34Z StefanSTS $
+ * @version $Id: default_shopfront.php 9924 2018-09-09 07:51:12Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -176,7 +176,7 @@ defined('_JEXEC') or die('Restricted access');?>
 </tr>
 </table>
 <?php
-vmJsApi::addJScript('vm.imagechange','
+vmJsApi::addJScript('vm-imagechange','
 	jQuery("#image").change(function () {
 		var $newimage = jQuery(this).val();
 		jQuery("#product_availability").val($newimage);

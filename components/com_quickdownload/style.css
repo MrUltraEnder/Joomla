@@ -1,0 +1,28 @@
+/*
+@component QuickDownload
+@copyright Copyright (C) 2013 Ionut Lupu
+@website : http://www.ionutlupu.me
+@license GNU General Public License version 2 or later; see license.txt
+*/
+
+i.file {
+background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAQCAYAAADAvYV+AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAFiQAABYkBbWid+gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAABeSURBVCiR7cyxDYJQAEXR8wkDUDABGzjA38MR2ICJiJUDUDOHBRM4wrOSDqU18SavO3kFM1bH9bglecCYxNFwxR1d8+Hx3RMDpq84yZLkgu3M894f/zpuUUspZ2x9AeQzJk/SyDzEAAAAAElFTkSuQmCC") no-repeat scroll 0% 0% transparent;
+width: 16px;
+height: 16px;
+display: inline-block;
+color:#000;
+}
+
+i.folder {
+background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAANCAYAAACgu+4kAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAFJwAABScBfvp8AwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAABiSURBVCiR7Y7BCYAwEARnJYJF2IIdpAhLSFE+LcIi7MYWAutXJRLxKQ7s59ibOwEzsHKmBTbbCw9ItjkG6IDxOi8l3Egz0EtKleNDUWA7A1PtdUmpqZVq/IJPCAIQJb3djzsQTzS/d08mngAAAABJRU5ErkJggg==") no-repeat scroll 0% 0% transparent;
+width: 24px;
+height: 24px;
+display: inline-block;
+color:#000;
+vertical-align:bottom;
+}
+
+.panel-body div 
+{
+	line-height: 30px;
+}

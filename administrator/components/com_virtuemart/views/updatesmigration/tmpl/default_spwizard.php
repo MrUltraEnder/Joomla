@@ -1,4 +1,6 @@
 <?php
+defined ('_JEXEC') or die();
+
 /**
 *
 * Configuration Wizard for Safepath

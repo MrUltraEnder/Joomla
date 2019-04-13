@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="details"
+		addfieldpath="/administrator/components/com_quickdownload/models/fields">
+		
+		<field name="id" type="text" default="0" label="JGLOBAL_FIELD_ID_LABEL"
+			description="JGLOBAL_FIELD_ID_DESC" readonly="true" class="readonly" />
+			
+		<field name="name" type="text" label="COM_QUICKDOWNLOAD_CATEGORIES_NAME"
+			description="COM_QUICKDOWNLOAD_CATEGORIES_NAME" class="inputbox" required="true" size="30" />
+
+	</fieldset>
+</form>

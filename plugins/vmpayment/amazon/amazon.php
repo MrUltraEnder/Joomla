@@ -9,7 +9,7 @@ defined('_JEXEC') or die('Direct Access to ' . basename(__FILE__) . 'is not allo
  * @version $Id: amazon.php 8585 2014-11-25 11:11:13Z alatak $
  * @author Valérie Isaksen
  * @link https://virtuemart.net
- * @copyright Copyright (c) 2004 - June 14 2018 VirtueMart Team. All rights reserved.
+ * @copyright Copyright (c) 2004 - October 07 2018 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -329,7 +329,7 @@ class plgVmpaymentAmazon extends vmPSPlugin {
 		$config['accessKey'] = $this->_currentMethod->accessKey;
 		$config['secretKey'] = $this->_currentMethod->secretKey;
 		$config['applicationName'] = 'VirtueMart';
-		$config['applicationVersion'] = '3.2.15';
+		$config['applicationVersion'] = '3.4.2';
 		$config['region'] = $this->_currentMethod->region;
 		$config['environment'] = $this->_currentMethod->environment;
 		$config['cnName'] = 'sns.amazonaws.com';//$this->_currentMethod->cnname;
@@ -397,7 +397,7 @@ class plgVmpaymentAmazon extends vmPSPlugin {
 		$config['access_key'] = $this->_currentMethod->accessKey;
 		$config['secret_key'] = $this->_currentMethod->secretKey;
 		$config['application_name'] = 'VirtueMart';
-		$config['application_version'] = '3.2.15';
+		$config['application_version'] = '3.4.2';
 		$config['region'] = $this->_currentMethod->region;
 		$config['sandbox'] = true;//$this->_currentMethod->environment;
 		//$config['cnName'] = $this->_currentMethod->cnname;//$_SERVER['HTTP_HOST']; //$_SERVER['SERVER_NAME'] //REQUEST_URI
@@ -3226,7 +3226,7 @@ $('.amazonDetailsOpener').click(function() {
 			$config['accessKey'] = $this->_currentMethod->accessKey;
 			$config['secretKey'] = $this->_currentMethod->secretKey;
 			$config['applicationName'] = 'VirtueMart';
-			$config['applicationVersion'] = '3.2.15';
+			$config['applicationVersion'] = '3.4.2';
 			$config['region'] = $this->_currentMethod->region;
 			$config['environment'] = $this->_currentMethod->environment;
 			$config['cnName'] = 'sns.amazonaws.com'; //$this->_currentMethod->cnname;

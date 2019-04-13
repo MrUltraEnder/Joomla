@@ -106,7 +106,7 @@ abstract class vmPSPlugin extends vmPlugin {
 	 * @param object  $cart Cart object
 	 * @param integer $selected ID of the method selected
 	 * @return boolean True on success, false on failures, null when this plugin was not selected.
-	 * On errors, JError::raiseWarning (or JError::raiseError) must be used to set a message.
+	 * On errors, vmWarn) must be used to set a message.
 	 *
 	 * @author Valerie Isaksen
 	 * @author Max Milbers
@@ -771,7 +771,7 @@ abstract class vmPSPlugin extends vmPlugin {
 			}
 			foreach ($logo_list as $logo) {
 				if(!empty($logo)){
-					if(JFile::exists(VMPATH_ROOT .DS. $url .DS.$logo)){
+					if(JFile::exists(VMPATH_ROOT .'/'. $url .'/'. $logo)){
 						$alt_text = substr ($logo, 0, strpos ($logo, '.'));
 						$img .= '<span class="vmCart' . ucfirst($this->_psType) . 'Logo" ><img align="middle" src="' . JUri::root().$url.'/'.$logo . '"  alt="' . $alt_text . '" /></span> ';
 					}
@@ -897,7 +897,7 @@ abstract class vmPSPlugin extends vmPlugin {
 			return FALSE;
 		}
 
-		foreach ($this->methods as $method) {
+		foreach ($this->methods as $k=>$method) {
 			if ($nb = (int)$this->checkConditions ($cart, $method, $cart_prices)) {
 
 				$nbMethod = $nbMethod + $nb;
@@ -999,7 +999,8 @@ abstract class vmPSPlugin extends vmPlugin {
 		}
 		$cartPrice = !empty($cart->cartPrices['withTax'])? $cart->cartPrices['withTax']:$cart->cartPrices['salesPrice'];
 
-		if(!isset($method->cost_per_transaction)) $method->cost_per_transaction = 0.0;
+		if(empty($method->cost_per_transaction)) $method->cost_per_transaction = 0.0;
+		if(empty($method->cost_percent_total)) $method->cost_percent_total = 0.0;
 
 		$costs = $method->cost_per_transaction + $cartPrice * $method->cost_percent_total * 0.01;
 		if(!empty($method->cost_min_transaction) and $method->cost_min_transaction!='' and $costs < $method->cost_min_transaction){
@@ -1237,14 +1238,16 @@ abstract class vmPSPlugin extends vmPlugin {
 			//shopFunctionsF::sentOrderConfirmedEmail($order);
 			//We delete the old stuff
 			$cart->emptyCart ();
-			vRequest::setVar ('html', $html);
+			//vRequest::setVar ('html', $html);
+			$cart->orderdoneHtml = $html;
 			// payment echos form, but cart should not be emptied, data is valid
 		} elseif ($returnValue == 2) {
 			$cart->_confirmDone = false;
 			$cart->_dataValidated = false;
 			$cart->_inConfirm = false;
+			//vRequest::setVar ('html', $html);
+			$cart->orderdoneHtml = $html;
 			$cart->setCartIntoSession (false,true);
-			vRequest::setVar ('html', $html);
 		} elseif ($returnValue == 0) {
 			// error while processing the payment
 			$mainframe = JFactory::getApplication ();

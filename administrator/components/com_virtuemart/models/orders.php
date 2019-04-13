@@ -16,7 +16,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: orders.php 9875 2018-06-14 13:59:38Z Milbo $
+ * @version $Id: orders.php 9940 2018-09-27 10:20:45Z junstoppable $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -135,7 +135,7 @@ class VirtueMartModelOrders extends VmModel {
 	 *
 	 * @return array
 	 */
-	public function getMyOrderDetails($orderID = 0, $orderNumber = false, $orderPass = false, $userlang=false){
+	public function getMyOrderDetails($orderID = 0, $orderNumber = false, $orderPass = false, $vmConf=true){
 
 		if(VmConfig::get('ordertracking','guests') == 'none' and !vmAccess::manager('orders')){
 			return false;
@@ -171,21 +171,25 @@ class VirtueMartModelOrders extends VmModel {
 					return $orderDetails;
 				}
 			}
-		} else if(VmConfig::get('ordertracking','guests') == 'registered' and empty($cuid)){
+		} else if($vmConf and VmConfig::get('ordertracking','guests') == 'registered' and empty($cuid)){
 			return true;
 		}
 
-		if( (VmConfig::get('ordertracking','guests') == 'guestlink' or VmConfig::get('ordertracking','guests') == 'guests') and !empty( $orderNumber )){
+		if(!empty( $orderNumber )){
+
+			if($vmConf and VmConfig::get('ordertracking','guests') != 'guestlink' and VmConfig::get('ordertracking','guests') != 'guests'){
+				return false;
+			}
 			$orderPass = vRequest::getString( 'order_pass', $orderPass );
 
 			if( empty( $orderPass )) {
-				return true;
+				return false;
 			} else {
 
 				$orderId = $this->getOrderIdByOrderPass( $orderNumber, $orderPass );
 				if($orderId) {
 
-					if(VmConfig::get('ordertracking','guests') == 'guestlink' or vmAccess::manager('orders')){
+					if(!$vmConf or (VmConfig::get('ordertracking','guests') == 'guestlink' or vmAccess::manager('orders'))){
 						$sess->set('getOrderDetails.'.$h,0);
 						return $this->getOrder( $orderId );
 					} //Guest case
@@ -195,7 +199,7 @@ class VirtueMartModelOrders extends VmModel {
 							$sess->set('getOrderDetails.'.$h,0);
 							return $o;
 						} else {
-							return true;
+							return false;
 						}
 					}
 				}
@@ -282,7 +286,7 @@ class VirtueMartModelOrders extends VmModel {
 
 			$ids = array();
 
-			$product = $pModel->getProduct($item->virtuemart_product_id);
+			$product = $pModel->getProduct($item->virtuemart_product_id, false, false, false);
 			if($product){
 				$pvar = get_object_vars($product);
 
@@ -662,6 +666,11 @@ class VirtueMartModelOrders extends VmModel {
 		if($orderUpdate){
 			$table->emptyCache();
 			$table->load($virtuemart_order_item_id);
+
+			JPluginHelper::importPlugin('vmcustom');
+			$dispatcher = JDispatcher::getInstance();
+			$results = $dispatcher->trigger('plgVmOnUpdateSingleItem', array(&$table, &$orderdata));
+
 			if($dataT['oi_hash']!=$table->oi_hash){
 				if(empty($dataT['virtuemart_order_item_id'])){
 					$dataT['action'] = 'new';
@@ -750,6 +759,7 @@ class VirtueMartModelOrders extends VmModel {
 		if($withTax){
 			$data['product_tax'] = round($data['product_final_price'], $rounding) * $taxCalcValue / ($taxCalcValue + 100);
 		} else {
+			//Todo why we should display this here with tax, if there isnt any?
 			$data['product_basePriceWithTax'] = round( $data['product_item_price'] * (1 + $taxCalcValue/100.0), $rounding );
 		}
 		$data['product_tax'] = round($data['product_tax'], $roundIntern);
@@ -975,12 +985,12 @@ vmdebug('my prices',$data);
 
 			JPluginHelper::importPlugin('vmshipment');
 			$_dispatcher = JDispatcher::getInstance();											//Should we add this? $inputOrder
-			$_returnValues = $_dispatcher->trigger('plgVmOnUpdateOrderShipment',array(&$data,$old_order_status));
+			$_returnValues = $_dispatcher->trigger('plgVmOnUpdateOrderShipment',array(&$data,$old_order_status,$inputOrder));
 
 			// Payment decides what to do when order status is updated
 			JPluginHelper::importPlugin('vmpayment');
 			$_dispatcher = JDispatcher::getInstance();											//Should we add this? $inputOrder
-			$_returnValues = $_dispatcher->trigger('plgVmOnUpdateOrderPayment',array(&$data,$old_order_status));
+			$_returnValues = $_dispatcher->trigger('plgVmOnUpdateOrderPayment',array(&$data,$old_order_status,$inputOrder));
 			foreach ($_returnValues as $_returnValue) {
 				if ($_returnValue === true) {
 					break; // Plugin was successfull
@@ -1589,7 +1599,6 @@ vmdebug('my prices',$data);
 			$productModel->updateStockInDB($tableOrderItems, $quantity,$product_in_stock,$product_ordered);
 		}
 
-
 	}
 
 	/**
@@ -1946,7 +1955,7 @@ vmdebug('my prices',$data);
 		shopFunctionsF::loadOrderLanguages(VmConfig::$jDefLangTag);
 		$order = $this->getOrder($virtuemart_order_id);
 
-
+		$vars = array();
 		$vars['orderDetails']=$order;
 
 		$payment_name = $shipment_name='';
@@ -2072,8 +2081,8 @@ vmdebug('my prices',$data);
 				if (!shopFunctions::InvoiceNumberReserved($invoiceNumberDate[0])) {
 
 					$controller = new VirtueMartControllerInvoice( array(
-					'model_path' => VMPATH_SITE.DS.'models',
-					'view_path' => VMPATH_SITE.DS.'views'
+					'model_path' => VMPATH_ADMIN .'/models',
+					'view_path' => VMPATH_SITE .'/views'
 					));
 					$lTag = VmConfig::$vmlangTag;
 
@@ -2467,8 +2476,7 @@ vmdebug('my prices',$data);
 		$orderTable =  $this->getTable('orders');
 		$orderTable -> bindChecknStore($_orderData);
 
-		$db = JFactory::getDBO();
-		$_orderID = $db->insertid();
+		$_orderID = $orderTable->virtuemart_order_id;;
 
 		$_usr  = JFactory::getUser();
 		if (!$this->_writeUserInfo($_orderID, $_usr, array())) {

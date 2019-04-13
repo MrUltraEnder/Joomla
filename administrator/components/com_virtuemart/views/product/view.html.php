@@ -13,7 +13,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: view.html.php 9869 2018-06-13 09:03:47Z Milbo $
+ * @version $Id: view.html.php 9953 2018-10-01 12:04:43Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -71,8 +71,10 @@ class VirtuemartViewProduct extends VmViewAdmin {
 				}
 				if(!empty($product->product_parent_id)){
 					$product_parent= $model->getProductSingle($product->product_parent_id,false);
+					if(!empty($product_parent->product_name)) $product_parent->product_name = vRequest::vmHtmlEntities($product_parent->product_name);
 				}
 
+				if(!empty($product->product_name)) $product->product_name = vRequest::vmHtmlEntities($product->product_name);
 
 				$customfields = VmModel::getModel ('Customfields');
 
@@ -254,6 +256,7 @@ class VirtuemartViewProduct extends VmViewAdmin {
 				if ($product->product_sku) $sku=' ('.$product->product_sku.')'; else $sku="";
 				//if (!empty($product->canonCatLink)) $canonLink = '&virtuemart_category_id=' . $product->canonCatLink; else $canonLink = '';
 				if(!empty($product->virtuemart_product_id)){
+
 					$menuItemID = shopFunctionsF::getMenuItemId(vmLanguage::getLanguage()->getTag());
 					$canonLink='';
 					if($product->canonCatId) $canonLink = '&virtuemart_category_id='.$product->canonCatId;
@@ -578,7 +581,7 @@ class VirtuemartViewProduct extends VmViewAdmin {
 			$parent = $this->model->getProductSingle($product_parent_id, false);
 
 			if (!empty($parent->product_name)){
-				$result = vmText::sprintf('COM_VIRTUEMART_LIST_CHILDREN_FROM_PARENT', htmlentities($parent->product_name));
+				$result = vmText::sprintf('COM_VIRTUEMART_LIST_CHILDREN_FROM_PARENT', $parent->product_name);
 				$c[$product_parent_id] = JHtml::_('link', JRoute::_('index.php?view=product&product_parent_id='.$product_parent_id.'&option=com_virtuemart'), $parent->product_name, array('title' => $result));
 
 			} else {

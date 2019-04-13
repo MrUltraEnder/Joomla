@@ -15,7 +15,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: view.html.php 9831 2018-05-07 13:45:33Z Milbo $
+ * @version $Id: view.html.php 9881 2018-06-20 09:03:58Z Milbo $
  */
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
@@ -354,13 +354,6 @@ class VirtuemartViewUser extends VmView {
     }
 
 
-	public function vmValidator (){
-		$prefiks = '';
-		if($this->address_type=='ST'){
-			$prefiks = 'shipto_';
-		}
-		vmJsApi::vmValidator($this->userDetails->JUser->guest,$this->userFields['fields'],$prefiks);
-	}
 
     /**
      * renderMailLayout

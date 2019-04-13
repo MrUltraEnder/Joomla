@@ -71,13 +71,8 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 
 	function plgVmOnStoreInstallPluginTable($jplugin_name,$name,$table=0) {
 		//vmdebug('plgVmOnStoreInstallPluginTable',$jplugin_name,$name);
-		if(!defined('VM_VERSION') or VM_VERSION < 3){
-			return $this->onStoreInstallPluginTable($jplugin_name,$name);
-		} else {
-			$this->onStoreInstallPluginTable ($jplugin_name);
-			$this->plgVmStorePluginInternalDataCalc($name);
-		}
-
+		$this->onStoreInstallPluginTable ($jplugin_name);
+		$this->plgVmStorePluginInternalDataCalc($name);
 	}
 
 	function getTableSQLFields() {

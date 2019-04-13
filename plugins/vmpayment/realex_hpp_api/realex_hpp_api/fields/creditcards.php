@@ -6,7 +6,7 @@ defined('_JEXEC') or die('Restricted access');
  * Realex payment plugin
  *
  * @author Valerie Isaksen
- * @version $Id: creditcards.php 9560 2017-05-30 14:13:21Z Milbo $
+ * @version $Id: creditcards.php 9821 2018-04-16 18:04:39Z Milbo $
  * @package VirtueMart
  * @subpackage payment
  * Copyright (C) 2004 - 2018 Virtuemart Team. All rights reserved.

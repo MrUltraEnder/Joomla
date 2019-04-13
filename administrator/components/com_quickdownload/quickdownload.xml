@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension method="upgrade" type="component" version="3.0">
+	<name>QuickDownload</name>
+	<author>Ionut Lupu</author>
+	<creationDate>February 2014</creationDate>
+	<authorEmail>contact@ionutlupu.me</authorEmail>
+	<authorUrl>ionutlupu.me</authorUrl>
+	<copyright>Ionut Lupu</copyright>
+	<license>GNU/GPL</license>
+	<version>3.1 "QD-03"</version>
+	<description><![CDATA[ QuickDownload is a component for Joomla! used to generate a unique code to download your files. ]]></description>
+
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">install.sql</file>
+		</sql>
+	</install>
+
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">uninstall.sql</file>
+		</sql>
+	</uninstall>
+
+	<files folder="site">
+		<filename>bootstrap.css</filename>
+		<filename>index.html</filename>
+		<filename>controller.php</filename>
+		<filename>quickdownload.php</filename>
+		<filename>license.txt</filename>
+		<filename>style.css</filename>
+		<folder>controllers</folder>
+		<folder>language</folder>
+		<folder>models</folder>
+		<folder>views</folder>
+	</files>
+
+	<administration>
+		
+		<menu img="components/com_quickdownload/assets/images/quickd.png" link="option=com_quickdownload">COM_QUICKDOWNLOAD_V</menu>
+
+		<files folder="admin">
+			<filename>index.html</filename>
+			<filename>controller.php</filename>
+			<filename>quickdownload.php</filename>
+			<filename>license.txt</filename>
+			<filename>install.sql</filename>
+			<filename>uninstall.sql</filename>
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<folder>assets</folder>
+			<folder>controllers</folder>
+			<folder>helpers</folder>
+			<folder>language</folder>
+			<folder>media</folder>
+			<folder>models</folder>
+			<folder>tables</folder>
+			<folder>views</folder>
+		</files>
+
+	</administration>
+</extension>

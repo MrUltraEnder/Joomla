@@ -2,7 +2,7 @@
 defined ('_JEXEC') or die();
 /**
  * @author Valérie Isaksen
- * @version $Id: display_payment.php 9667 2017-11-15 11:17:36Z Milbo $
+ * @version $Id: display_payment.php 9821 2018-04-16 18:04:39Z Milbo $
  * @package VirtueMart
  * @subpackage payment
  * @copyright Copyright (C) 2004-Copyright (C) 2004 - 2018 Virtuemart Team. All rights reserved.   - All rights reserved.

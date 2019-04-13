@@ -13,7 +13,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: cart.php 9875 2018-06-14 13:59:38Z Milbo $
+ * @version $Id: cart.php 9930 2018-09-14 08:07:41Z Milbo $
  */
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
@@ -120,7 +120,13 @@ class VirtueMartControllerCart extends JControllerLegacy {
 			return true;
 		} else {
 			//$cart->_inCheckOut = false;
-			$redirect = (isset($request['checkout']) or $task=='checkout');
+			$redirect = (isset($request['checkout']) or $task=='checkout' );
+
+			if( VmConfig::get('directCheckout',false) and !$redirect and !$cart->getInCheckOut() and !vRequest::getInt('dynamic',0) and !$cart->_dataValidated) {
+				$redirect = true;
+				vmdebug('directCheckout');
+			}
+
 			$cart->_inConfirm = false;
 			$cart->checkoutData($redirect);
 		}

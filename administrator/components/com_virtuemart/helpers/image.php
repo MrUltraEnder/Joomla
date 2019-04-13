@@ -8,7 +8,8 @@
  * @package	VirtueMart
  * @subpackage Helpers
  * @author Max Milbers
- * @copyright Copyright (c) 2004-2008 Soeren Eberhardt-Biermann, 2009 VirtueMart Team. All rights reserved.
+ * @copyright Copyright (c) 2004-2008 Soeren Eberhardt-Biermann, 2009 2018 VirtueMart Team. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL 2, see COPYRIGHT.php
  */
 
 defined('_JEXEC') or die();
@@ -34,8 +35,8 @@ class VmImage extends VmMediaHandler {
 				$file_url = $this->file_url;
 				$file_alt = $this->file_title;
 			} else {
-				$rel_path = str_replace('/',DS,$this->file_url_folder);
-				$fullSizeFilenamePath = VMPATH_ROOT.DS.$rel_path.$this->file_name.'.'.$this->file_extension;
+				//$rel_path = str_replace('/',DS,$this->file_url_folder);
+				$fullSizeFilenamePath = vRequest::filterPath(VMPATH_ROOT.'/'.$this->file_url_folder.$this->file_name.'.'.$this->file_extension);
 				if (!file_exists($fullSizeFilenamePath)) {
 					$file_url = $this->theme_url.'assets/images/vmgeneral/'.VmConfig::get('no_image_found');
 					$file_alt = vmText::_('COM_VIRTUEMART_NO_IMAGE_FOUND').' '.$this->file_description;
@@ -146,16 +147,16 @@ class VmImage extends VmMediaHandler {
 		$this->file_name_thumb = $this->createThumbName($width,$height);
 
 		if($this->file_is_forSale==0){
-			$rel_path = str_replace('/',DS,$this->file_url_folder);
-			$fullSizeFilenamePath = VMPATH_ROOT.DS.$rel_path.$this->file_name.'.'.$this->file_extension;
+
+			$fullSizeFilenamePath = VMPATH_ROOT.'/'.$this->file_url_folder.$this->file_name.'.'.$this->file_extension;
 		} else {
 			$fullSizeFilenamePath = $this->file_url_folder.$this->file_name.'.'.$this->file_extension;
 		}
+		$fullSizeFilenamePath = vRequest::filterPath($fullSizeFilenamePath);
 
-		$file_path_thumb = str_replace('/',DS,$this->file_url_folder_thumb);
-		$resizedFilenamePath = VMPATH_ROOT.DS.$file_path_thumb.$this->file_name_thumb.'.'.$this->file_extension;
+		$resizedFilenamePath = vRequest::filterPath(VMPATH_ROOT.'/'.$this->file_url_folder_thumb.$this->file_name_thumb.'.'.$this->file_extension);
 
-		$this->checkPathCreateFolders($file_path_thumb);
+		$this->checkPathCreateFolders(vRequest::filterPath($this->file_url_folder_thumb));
 
 		if (file_exists($fullSizeFilenamePath)) {
 			if(!file_exists($resizedFilenamePath)) {
@@ -202,4 +203,3 @@ class VmImage extends VmMediaHandler {
 	}
 
 }
-

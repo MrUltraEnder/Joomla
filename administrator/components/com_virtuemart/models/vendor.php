@@ -13,7 +13,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: vendor.php 9863 2018-06-07 07:32:06Z Milbo $
+ * @version $Id: vendor.php 9966 2018-10-07 13:29:27Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -60,7 +60,7 @@ class VirtueMartModelVendor extends VmModel {
 			$vendorId = self::getVendorId ('user', $userId, $ownerOnly);
 			return $vendorId;
 		} else {
-			JError::raiseNotice (1, '$virtuemart_user_id empty, no user logged in');
+			//vmError ('$virtuemart_user_id empty, no user logged in', '$virtuemart_user_id empty, no user logged in');
 			return 0;
 		}
 
@@ -102,17 +102,38 @@ class VirtueMartModelVendor extends VmModel {
 	 * todo only names are needed here, maybe it should be enhanced (loading object list is slow)
 	 * todo add possibility to load without limit
 	 *
-	 * @author RickG
 	 * @author Max Milbers
 	 * @return object List of vendors
 	 */
-	public function getVendors () {
+	public function getVendors ($keyword = "") {
+
 
 		$this->setId (0); //This is important ! notice by Max Milbers
-		$query = 'SELECT * FROM `#__virtuemart_vendors_' . VmConfig::$vmlang . '` as l JOIN `#__virtuemart_vendors` as v using (`virtuemart_vendor_id`)';
-		$query .= ' ORDER BY l.`virtuemart_vendor_id`';
-		$this->_data = $this->_getList ($query, $this->getState ('limitstart'), $this->getState ('limit'));
-		return $this->_data;
+		//$query = 'SELECT * FROM `#__virtuemart_vendors_' . VmConfig::$vmlang . '` as l JOIN `#__virtuemart_vendors` as v using (`virtuemart_vendor_id`)';
+//$this->setDebugSql(1);
+
+		$langFields = array('vendor_store_desc','vendor_terms_of_service','vendor_legal_info','vendor_letter_css','vendor_letter_header_html','vendor_letter_footer_html', 'vendor_store_name', 'vendor_phone', 'vendor_url', 'metadesc', 'metakey', 'customtitle', 'vendor_invoice_free1', 'vendor_invoice_free2', 'vendor_mail_free1', 'vendor_mail_free2', 'vendor_mail_css', 'slug');
+		$select = ' v.*, vm.virtuemart_media_id,'.implode(', ',self::joinLangSelectFields($langFields));
+		$joins = ' FROM #__virtuemart_vendors as v '.implode(' ',self::joinLangTables('#__virtuemart_vendors','v','virtuemart_vendor_id')) .' LEFT JOIN #__virtuemart_vendor_medias as vm on v.virtuemart_vendor_id=vm.virtuemart_vendor_id' ;
+		$whereString = '';
+		$ordering = ' ORDER BY l.`virtuemart_vendor_id`';
+
+		//$this->_data = $this->_getList ($query, $this->getState ('limitstart'), $this->getState ('limit'));vmdebug('my data',$this->_data);
+		//return $this->_data;
+
+
+		$hash = md5($keyword.'.'.VmLanguage::$currLangTag);
+		if(!isset($vends[$hash])){
+			$vends[$hash] = $this->exeSortSearchListQuery(0,$select,$joins,$whereString,'GROUP BY virtuemart_vendor_id',$ordering );
+			$venTab = $this->getTable('vendors');
+			foreach($vends[$hash] as $ven){
+				if(!empty($venTab->_varsToPushParam)){
+					VmTable::bindParameterable($ven,'vendor_params',$venTab->_varsToPushParam);
+				}
+			}
+		}
+
+		return $vends[$hash];
 	}
 
 	/**
@@ -258,16 +279,29 @@ class VirtueMartModelVendor extends VmModel {
 
 		if(!isset(self::$_vendorCurrencies[$_vendorId])){
 			$db = JFactory::getDBO ();
-
-			$q = 'SELECT *  FROM `#__virtuemart_currencies` AS c
+			if(VmConfig::get('anyInShopCurrency',true)){
+				$q = 'SELECT *  FROM `#__virtuemart_currencies` AS c
 			LEFT JOIN `#__virtuemart_vendors` AS v ON  c.virtuemart_currency_id = v.vendor_currency
 			WHERE v.virtuemart_vendor_id = "' . (int)$_vendorId . '"';
-			$db->setQuery ($q);
-			self::$_vendorCurrencies[$_vendorId] = $db->loadObject ();
-			if(!self::$_vendorCurrencies[$_vendorId]){
-				$link = '/index.php?option=com_virtuemart&view=user&task=editshop';
-				vmWarn('COM_VIRTUEMART_CONF_WARN_NO_CURRENCY_DEFINED','<a href="'.$link.'">'.$link.'</a>');
+				$db->setQuery ($q);
+				self::$_vendorCurrencies[$_vendorId] = $db->loadObject ();
+				if(!self::$_vendorCurrencies[$_vendorId]){
+					$link = JURI::root(false).'administrator/index.php?option=com_virtuemart&view=user&task=editshop';
+					vmWarn('COM_VIRTUEMART_CONF_WARN_NO_CURRENCY_DEFINED','<a href="'.$link.'">'.$link.'</a>');
+				}
+			} else {
+				$virtuemart_currency_id = vRequest::get('virtuemart_currency_id',false);
+				self::getVendorAndAcceptedCurrencies($_vendorId);
+				if(in_array($virtuemart_currency_id, self::$_vendorAcceptedCurrencies)){
+					$q = 'SELECT *  FROM `#__virtuemart_currencies` AS c
+			LEFT JOIN `#__virtuemart_vendors` AS v ON  c.virtuemart_vendor_id = v.virtuemart_vendor_id
+			WHERE v.virtuemart_currency_id = "' . (int)$virtuemart_currency_id . '"';
+					$db->setQuery ($q);
+					self::$_vendorCurrencies[$_vendorId] = $db->loadObject ();
+
+				}
 			}
+
 		}
 
 		return self::$_vendorCurrencies[$_vendorId];
@@ -307,7 +341,7 @@ class VirtueMartModelVendor extends VmModel {
 //			$virtuemart_user_id = $db->f('virtuemart_user_id');
 			return $db->loadResult ();
 		} else {
-			JError::raiseNotice (1, 'Error in DB $virtuemart_order_id ' . $virtuemart_order_id . ' dont have a virtuemart_user_id');
+			vmError ('Error in DB; No virtuemart_user_id found for $virtuemart_order_id ' . $virtuemart_order_id );
 			return 0;
 		}
 	}

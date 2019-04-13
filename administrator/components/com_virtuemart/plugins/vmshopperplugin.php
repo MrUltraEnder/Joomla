@@ -1,4 +1,5 @@
 <?php
+defined ('_JEXEC') or die();
 /**
  * Abstract class for order plugins
  *

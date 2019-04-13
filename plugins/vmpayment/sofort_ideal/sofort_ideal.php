@@ -3,7 +3,7 @@ defined('_JEXEC') or die('Restricted access');
 
 /**
  * @author Valérie Isaksen
- * @version $Id: sofort_ideal.php 9560 2017-05-30 14:13:21Z Milbo $
+ * @version $Id: sofort_ideal.php 9821 2018-04-16 18:04:39Z Milbo $
  * @package VirtueMart
  * @subpackage payment
  * @copyright Copyright (C) 2004-Copyright (C) 2004 - 2018 Virtuemart Team. All rights reserved.   - All rights reserved.
@@ -21,7 +21,7 @@ if (!class_exists('vmPSPlugin')) {
 }
 
 class plgVmPaymentSofort_Ideal extends vmPSPlugin {
-	const RELEASE = 'VM 3.2.15';
+	const RELEASE = 'VM 3.4.2';
 	const PAYMENT_CURRENCY_CODE_3 = 'EUR';
 
 	function __construct(& $subject, $config) {

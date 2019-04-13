@@ -66,6 +66,7 @@ class VmTable extends vObject implements JObservableInterface, JTableInterface {
 	public $_loadedWithLangFallback = 0;
 	public $_loaded = false;
 	protected $_updateNulls = false;
+	protected $_toConvertDec = false;
 
 	/**
 	 * @param string $table
@@ -183,7 +184,7 @@ class VmTable extends vObject implements JObservableInterface, JTableInterface {
 			}
 			if (!class_exists($tableClass))
 			{
-				vmdebug('Did not find file '.$type.'.php in ',$paths,$tryThis);
+				vmdebug('Did not find class '.$tableClass.' in file '.$type.'.php in ',$paths,$tryThis);
 				return false;
 			}
 		}
@@ -304,9 +305,9 @@ class VmTable extends vObject implements JObservableInterface, JTableInterface {
 		return $this->_pkey;
 	}
 
-	public function setObligatoryKeys($key) {
+	public function setObligatoryKeys($key, $error = 1) {
 
-		$this->_obkeys[$key] = 1;
+		$this->_obkeys[$key] = $error;
 	}
 
 	public function setUniqueName($name) {
@@ -422,6 +423,26 @@ class VmTable extends vObject implements JObservableInterface, JTableInterface {
 
 	public function emptyCache(){
 		self::$_cache = array();
+	}
+
+	/**
+	 * @param $toConvert array
+	 */
+	public function setConvertDecimal($toConvert) {
+		$this->_toConvertDec = $toConvert;
+	}
+
+	public function convertDec(){
+
+		if($this->_toConvertDec){
+			foreach($this->_toConvertDec as $f){
+				if(!empty($this->$f)){
+					$this->$f = str_replace(array(',',' '),array('.',''),$this->$f);
+				} else if(isset($this->$f)){
+					$this->$f = 0.0;
+				}
+			}
+		}
 	}
 
 	/**
@@ -1056,6 +1077,7 @@ class VmTable extends vObject implements JObservableInterface, JTableInterface {
 
 			if($this->_translatable and VmConfig::$langCount>1 and $this->_ltmp!=VmConfig::$jDefLang ){
 
+				//$usedLangTag = $this->_langTag;
 				if(VmConfig::$defaultLang!=VmConfig::$jDefLang){
 					if($this->_langTag != VmConfig::$defaultLang ){
 						$this->_ltmp = $this->_langTag;
@@ -1063,17 +1085,20 @@ class VmTable extends vObject implements JObservableInterface, JTableInterface {
 					} else {
 						$this->_langTag = VmConfig::$jDefLang;
 					}
-
 				} else {
 					$this->_ltmp = $this->_langTag;
 					$this->_langTag = VmConfig::$defaultLang;
 				}
 
-				//vmdebug('No result for '.$this->_ltmp.', lets check for Fallback lang '.$this->_langTag);
+
+				//vmdebug('No result for '.$usedLangTag.' '.$this->_pkey.' '.$this->_slugAutoName.', lets check for Fallback lang '.$this->_langTag);
+				
+
 				//vmSetStartTime('lfallback');
 				$this->_loadedWithLangFallback = VmConfig::$defaultLangTag;
 				$this->load($oid, $overWriteLoadName, $andWhere, $tableJoins, $joinKey) ;
 				//vmTime('Time to load language fallback '.$this->_langTag, 'lfallback');
+				return $this;
 			} else {
 				$this->_loaded = false;
 			}
@@ -1082,7 +1107,6 @@ class VmTable extends vObject implements JObservableInterface, JTableInterface {
 		if($this->_ltmp){
 			//vmdebug('Set Ltmp '.$this->_ltmp.' back to false');
 			$this->_langTag = $this->_ltmp;
-
 			self::$_cache['l'][$this->_lhash] = $this->loadFieldValues(false);
 		}
 		else {
@@ -1095,6 +1119,7 @@ class VmTable extends vObject implements JObservableInterface, JTableInterface {
 		}
 		//if($this->_translatable) vmTime('loaded '.$this->_langTag.' '.$mainTable.' '.$oid ,'vmtableload');
 		$this->_ltmp = false;
+
 		return $this;
 	}
 
@@ -1585,6 +1610,8 @@ class VmTable extends vObject implements JObservableInterface, JTableInterface {
 				return false;
 			}
 		}
+
+		$this->convertDec();
 
 		if(!empty($this->_hashName)){
 			$this->hashEntry();

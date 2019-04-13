@@ -150,18 +150,30 @@ class plgVmPaymentStandard extends vmPSPlugin {
 
 		$currency = CurrencyDisplay::getInstance ('', $order['details']['BT']->virtuemart_vendor_id);
 
-		$html = $this->renderByLayout('post_payment', array(
-			'order_number' =>$order['details']['BT']->order_number,
-			'order_pass' =>$order['details']['BT']->order_pass,
-			'payment_name' => $dbValues['payment_name'],
-			'displayTotalInPaymentCurrency' => $totalInPaymentCurrency['display'],
-			'order_user_id' => $order['details']['BT']->virtuemart_user_id
-		));
+
 		$modelOrder = VmModel::getModel ('orders');
 		$order['order_status'] = $this->getNewStatus ($method);
 		$order['customer_notified'] = 1;
 		$order['comments'] = '';
 		$modelOrder->updateStatusForOneOrder ($order['details']['BT']->virtuemart_order_id, $order, TRUE);
+
+		$orderlink='';
+		$tracking = VmConfig::get('ordertracking','guests');
+		if($tracking !='none' and !($tracking =='registered' and empty($order['details']['BT']->virtuemart_user_id) )) {
+
+			$orderlink = 'index.php?option=com_virtuemart&view=orders&layout=details&order_number=' . $order['details']['BT']->order_number;
+			if ($tracking == 'guestlink' or ($tracking == 'guests' and empty($order['details']['BT']->virtuemart_user_id))) {
+				$orderlink .= '&order_pass=' . $order['details']['BT']->order_pass;
+			}
+		}
+
+		$html = $this->renderByLayout('post_payment', array(
+			'order_number' =>$order['details']['BT']->order_number,
+			'order_pass' =>$order['details']['BT']->order_pass,
+			'payment_name' => $dbValues['payment_name'],
+			'displayTotalInPaymentCurrency' => $totalInPaymentCurrency['display'],
+			'orderlink' =>$orderlink
+		));
 
 		//We delete the old stuff
 		$cart->emptyCart ();

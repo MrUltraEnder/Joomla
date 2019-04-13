@@ -52,7 +52,6 @@ class GenericTableUpdater extends VmModel{
 									'categories'=>'virtuemart_category_id',
 									'manufacturers'=>'virtuemart_manufacturer_id',
 									'manufacturercategories'=>'virtuemart_manufacturercategories_id',
-
 									'paymentmethods'=>'virtuemart_paymentmethod_id',
 									'shipmentmethods'=>'virtuemart_shipmentmethod_id');
 
@@ -65,7 +64,7 @@ class GenericTableUpdater extends VmModel{
 	public function createLanguageTables($langs=0){
 
 		if(empty($langs)){
-			$langs = VmConfig::get('active_languages',array(VmConfig::$jDefLang));
+			$langs = VmConfig::get('active_languages',array(VmConfig::$jDefLangTag));
 			if(empty($langs)){
 				$langs = (array)VmConfig::$defaultLang;
 			}
@@ -104,7 +103,7 @@ class GenericTableUpdater extends VmModel{
 			if(VmConfig::get('dblayoutstrict',true)){
 				if($table=='products'){
 					$fields['product_s_desc'] = 'varchar('.VmConfig::get('dbpsdescsize',2000).') '.$linedefault;
-					$fields['product_desc'] = 'varchar('.VmConfig::get('dbpdescsize',18400).') '.$linedefault;
+					$fields['product_desc'] = 'text '.$linedefaulttext;
 
 					$key = array_search('product_desc', $translatableFields);
 					unset($translatableFields[$key]);

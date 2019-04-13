@@ -310,6 +310,10 @@ class vRequest {
 		return $c;
 	}
 
+	public static function vmHtmlEntities($str){
+		return htmlentities($str, ENT_COMPAT, "UTF-8", false);
+	}
+
 	/**
 	 * Checks for a form token in the request.
 	 *

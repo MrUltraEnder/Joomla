@@ -3,13 +3,13 @@ defined('_JEXEC') or  die( 'Direct Access to '.basename(__FILE__).' is not allow
 /*
 *Cart Ajax Module
 *
-* @version $Id: mod_virtuemart_cart.php 9831 2018-05-07 13:45:33Z Milbo $
+* @version $Id: mod_virtuemart_cart.php 9881 2018-06-20 09:03:58Z Milbo $
 * @package VirtueMart
 * @subpackage modules
 *
 * @link https://virtuemart.net
 */
-defined('DS') or define('DS', DIRECTORY_SEPARATOR);
+
 if (!class_exists( 'VmConfig' )) require(JPATH_ROOT .'/administrator/components/com_virtuemart/helpers/config.php');
 VmConfig::loadConfig();
 vmLanguage::loadJLang('mod_virtuemart_cart', true);
