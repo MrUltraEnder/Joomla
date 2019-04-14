@@ -14,3 +14,5 @@
 2019-04-13T02:49:03+00:00	INFO ::1	update	Borrando los archivos y carpetas que han sido eliminados.
 2019-04-13T02:49:21+00:00	INFO ::1	update	Limpieza posterior a la instalación.
 2019-04-13T02:49:21+00:00	INFO ::1	update	La actualización a la versión 3.9.5 se ha completado.
+2019-04-14T18:22:43+00:00	INFO ::1	update	Actualización inciciadoa por el usuario Steve (356). La versión antigua es la 3.9.5.
+2019-04-14T18:22:44+00:00	INFO ::1	update	Descargando el archivo desde https://s3-us-west-2.amazonaws.com/joomla-official-downloads/joomladownloads/joomla3/Joomla_3.9.5-Stable-Update_Package.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIZ6S3Q3YQHG57ZRA%2F20190414%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20190414T182242Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&X-Amz-Signature=ea76b195c9555081292d2757d6586968d5bee4e522319f489f11d8f72b76d05f.
