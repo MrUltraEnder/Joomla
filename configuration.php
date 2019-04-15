@@ -30,7 +30,7 @@ class JConfig {
 	public $ftp_root = '';
 	public $ftp_enable = '0';
 	public $offset = 'UTC';
-	public $mailonline = '1';
+	public $mailonline = '0';
 	public $mailer = 'mail';
 	public $mailfrom = 'asoasteam6@gmail.com';
 	public $fromname = 'NECK-D';
